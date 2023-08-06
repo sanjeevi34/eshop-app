@@ -1,0 +1,1 @@
+This folder contains all the resource files that is used in the application.

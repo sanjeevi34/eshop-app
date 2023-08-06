@@ -1,0 +1,1 @@
+This folder contains all the React components. For each component, there is a folder with the component name as the folder name and inside the folder, JSX file and stylesheet corresponding to that component will be present.

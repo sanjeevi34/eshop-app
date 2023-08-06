@@ -1,0 +1,1 @@
+This folder contains all the common elements, components, stylesheets, scripts for the application.
