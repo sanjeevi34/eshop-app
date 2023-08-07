@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Link from '@mui/material/Link';
 import Button from '@mui/material-next/Button';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useHistory } from 'react-router-dom'; // Import useHistory
 import {
   AppBar,
   IconButton,
@@ -32,6 +33,11 @@ const NavBar = (props) => {
 //        return localStorage.removeItem("user");
 //    }
 
+    const history = useHistory(); // Get the history object
+
+    const navigateTo = (path) => {
+    history.push(path); // Use history.push to navigate to the specified path
+    };
     if (!props.loggedIn) {
         return (
             <AppBar position="sticky">
@@ -65,6 +71,7 @@ const NavBar = (props) => {
                       component="button"
                       variant="h6"
                       sx={{color: 'white', pr: 2}}
+                      onClick={() => navigateTo('/signup')}
                     >
                       Sign Up
                     </Link>
