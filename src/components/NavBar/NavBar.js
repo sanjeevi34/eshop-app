@@ -10,29 +10,29 @@ import {
 } from "@mui/material";
 import styles from './NavBar.css';
 
-const NavBar = () => {
+const NavBar = (props) => {
 
     const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        { /*
-            setInterval was used in order to refresh the page constantly
-            in order to have the "logout" button show immediately in place of
-            "login", as soon as user logs out.*/
-        }
-        setInterval(() => {
-            const userString = localStorage.getItem("user");
-            const user = JSON.parse(userString);
-            setUser(user);
-            }, [])
-    }, 5000);
+//    useEffect(() => {
+//        { /*
+//            setInterval was used in order to refresh the page constantly
+//            in order to have the "logout" button show immediately in place of
+//            "login", as soon as user logs out.*/
+//        }
+//        setInterval(() => {
+//            const userString = localStorage.getItem("user");
+//            const user = JSON.parse(userString);
+//            setUser(user);
+//            }, [])
+//    }, 5000);
 
 
-    const logout = () => {
-        return localStorage.removeItem("user");
-    }
+//    const logout = () => {
+//        return localStorage.removeItem("user");
+//    }
 
-    if (!user) {
+    if (!props.loggedIn) {
         return (
             <AppBar position="sticky">
                 <Toolbar>
@@ -72,7 +72,7 @@ const NavBar = () => {
             </AppBar>
         )
     }
-    if (user) {
+    if (props.loggedIn) {
        return (
             <AppBar position="sticky">
                 <Toolbar>

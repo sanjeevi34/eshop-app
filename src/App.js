@@ -8,13 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 
-import NavBar from './components/NavBar/NavBar.js';
 import SignUp from './components/SignUp/SignUp.js'
+import NavBar from './components/NavBar/NavBar.js'
 
 function App() {
   return (
     <div className="App">
-        <NavBar/>
         <SignUp/>
     </div>
   );

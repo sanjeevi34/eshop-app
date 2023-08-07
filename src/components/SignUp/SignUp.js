@@ -1,15 +1,13 @@
-import {
-    Box,
-    Icon,
-    Typography,
-} from "@mui/material";
 import React, {useState} from 'react';
+import {Box,Typography} from "@mui/material";
 import { TextField, Button, Container, Stack } from '@mui/material';
 import { Link } from "react-router-dom"
 import { pink } from '@mui/material/colors';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import styles from './SignUp.css';
+
+import NavBar from '../NavBar/NavBar.js';
 
 const SignUp = () => {
     const [firstName, setFirstName] = useState('')
@@ -22,14 +20,14 @@ const SignUp = () => {
 
     async function signUpSubmit(firstName, lastName, email, password, mobile) {
         const params = {
-            email: "name11@gmail.com",
+            email: email,
             role: [
                 "user"
             ],
-            password: "name11",
-            firstName: "name11",
-            lastName: "name11",
-            contactNumber: "122456788"
+            password: password,
+            firstName: firstName,
+            lastName: lastName,
+            contactNumber: mobile
         }
 
         try {
@@ -45,7 +43,7 @@ const SignUp = () => {
             const result = await rawResponse.json();
 
             if(rawResponse.ok) {
-                window.location.href = './login.html';
+                window.location.href = './login';
                 alert('Form Submitted');
             } else {
                 const error = new Error();
@@ -70,26 +68,34 @@ const SignUp = () => {
 
     return (
         <React.Fragment>
-            <Box>
-                {/*<Box display="flex"      sx={{
-                             borderRadius: '50%',
-                             width: 50,
-                             height: 50,
-                             backgroundColor: pink[600],
-                           }}>
-                           */}
-                    <LockOutlinedIcon fontSize="large" sx={{ color: pink[500] }}/>
-                {/*</Box>*/}
-                <Typography
-                    variant="h6"
-                    component="div"
-                    align="center"
-                    sx={{ flexGrow: 1, pb: 4}}
-                >
-                    Sign up
-                </Typography>
-            </Box>
-            <div style={{ width: '400px', height: '300px', margin: 'auto' }}>
+            <NavBar loggedIn={false}/>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center', // Center vertically
+                    minHeight: '75vh', // Adjust height to fill the viewport
+                    padding: '20px',
+                    width: '400px', height: '300px', margin: 'auto' }}>
+                <Box>
+                    {/*<Box display="flex"      sx={{
+                                 borderRadius: '50%',
+                                 width: 50,
+                                 height: 50,
+                                 backgroundColor: pink[600],
+                               }}>
+                               */}
+                        <LockOutlinedIcon fontSize="large" sx={{ color: pink[500] }}/>
+                    {/*</Box>*/}
+                    <Typography
+                        variant="h6"
+                        component="div"
+                        align="center"
+                        sx={{ flexGrow: 1, pb: 4}}
+                    >
+                        Sign up
+                    </Typography>
+                </Box>
                 <form onSubmit={handleSubmit} action={<Link to="/login" />}>
                     <TextField
                         type="text"
