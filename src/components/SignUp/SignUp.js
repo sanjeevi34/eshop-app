@@ -100,7 +100,7 @@ const SignUp = () => {
                     <TextField
                         type="text"
                         variant='outlined'
-                        color='secondary'
+                        color='primary'
                         label="First Name"
                         onChange={e => setFirstName(e.target.value)}
                         value={firstName}
@@ -111,7 +111,7 @@ const SignUp = () => {
                     <TextField
                         type="text"
                         variant='outlined'
-                        color='secondary'
+                        color='primary'
                         label="Last Name"
                         onChange={e => setLastName(e.target.value)}
                         value={lastName}
@@ -122,7 +122,7 @@ const SignUp = () => {
                     <TextField
                         type="email"
                         variant='outlined'
-                        color='secondary'
+                        color='primary'
                         label="Email"
                         onChange={e => setEmail(e.target.value)}
                         value={email}
@@ -133,7 +133,7 @@ const SignUp = () => {
                     <TextField
                         type="password"
                         variant='outlined'
-                        color='secondary'
+                        color='primary'
                         label="Password"
                         onChange={e => setPassword(e.target.value)}
                         value={password}
@@ -144,7 +144,7 @@ const SignUp = () => {
                     <TextField
                         type="password"
                         variant='outlined'
-                        color='secondary'
+                        color='primary'
                         label="Confirm Password"
                         onChange={e => setConfirmPassword(e.target.value)}
                         value={confirmPassword}
@@ -155,7 +155,7 @@ const SignUp = () => {
                     <TextField
                         type="tel"
                         variant='outlined'
-                        color='secondary'
+                        color='primary'
                         label="Contact Number"
                         onChange={e => setMobile(e.target.value)}
                         value={mobile}
@@ -165,8 +165,8 @@ const SignUp = () => {
                     />
                     <Button variant="contained" color="primary" type="submit" fullWidth>SIGN UP</Button>
                 </form>
-                <div style={{display: 'flex', justifyContent:'flex-end', padding: '20px'}}>
-                    <small>Already have an account? <Link to="/login">Sign in</Link></small>
+                <div style={{display: 'flex', justifyContent:'flex-end', padding: '20px 0 0 0'}}>
+                    <small><Link to="/login">Already have an account? Sign in</Link></small>
                 </div>
             </div>
 

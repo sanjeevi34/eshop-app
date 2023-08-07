@@ -10,8 +10,10 @@ import {
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //Import components
+import LogIn from './components/LogIn/LogIn.js'
 import SignUp from './components/SignUp/SignUp.js'
 import NavBar from './components/NavBar/NavBar.js'
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={NavBar} />
                 <Route path="/signup" component={SignUp} />
+                <Route path="/login" component={LogIn} />
             </Switch>
         </Router>
     </div>

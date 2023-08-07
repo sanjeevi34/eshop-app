@@ -38,6 +38,7 @@ const NavBar = (props) => {
     const navigateTo = (path) => {
     history.push(path); // Use history.push to navigate to the specified path
     };
+
     if (!props.loggedIn) {
         return (
             <AppBar position="sticky">
@@ -64,6 +65,7 @@ const NavBar = (props) => {
                       component="button"
                       variant="h6"
                       sx={{color: 'white', pr: 4}}
+                      onClick={() => navigateTo('/login')}
                     >
                       Login
                     </Link>
