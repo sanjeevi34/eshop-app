@@ -12,6 +12,37 @@ const LogIn = () => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
+    async function login(email, password) {
+        //const param = window.btoa(`${email}:${password}`);
+        const params = {
+            username: email,
+            password: password
+        }
+        try {
+            const rawResponse = await fetch('http://localhost:8080/api/auth/signin', {
+                method: 'POST',
+                body: JSON.stringify(params),
+                headers: {
+                "Accept": "*/*",
+                "Content-Type": "application/json"
+                }
+            });
+
+            const result = await rawResponse.json();
+            if(rawResponse.ok) {
+                //window.sessionStorage.setItem('user-details', JSON.stringify(result));
+                window.sessionStorage.setItem('access-token', rawResponse.headers.get('token'));
+                //window.location.href = './boards.html';
+                alert('Logged in successfully');
+            } else {
+                const error = new Error();
+                error.message = result.message || 'Something went wrong.';
+            }
+        } catch(e) {
+            alert('Email Address or Password is incorrect');
+        }
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         setEmailError(false);
@@ -24,7 +55,7 @@ const LogIn = () => {
             setPasswordError(true)
         }
         if (email && password) {
-            console.log(email, password)
+            login(email, password);
         }
     }
 
