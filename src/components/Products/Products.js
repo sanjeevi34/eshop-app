@@ -11,7 +11,7 @@ const Products = () => {
     if(signedIn == true) {
         return (
             <div>
-            <NavBar/>
+            <NavBar loggedIn={true}/>
             Signed In
             </div>
         )
@@ -19,7 +19,7 @@ const Products = () => {
     else {
         return (
             <div>
-            <NavBar/>
+            <NavBar loggedIn={false}/>
             Not Signed In
             </div>
         )
