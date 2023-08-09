@@ -9,7 +9,10 @@ import {
 } from "@mui/material";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import { AuthProvider } from './Contexts/AuthContext'
 //Import components
+import { useAuth } from './Contexts/AuthContext.js'
+import Products from './components/Products/Products.js'
 import LogIn from './components/LogIn/LogIn.js'
 import SignUp from './components/SignUp/SignUp.js'
 import NavBar from './components/NavBar/NavBar.js'
@@ -18,13 +21,16 @@ import NavBar from './components/NavBar/NavBar.js'
 function App() {
   return (
     <div className="App">
-        <Router>
-            <Switch>
-                <Route exact path="/" component={NavBar} />
-                <Route path="/signup" component={SignUp} />
-                <Route path="/login" component={LogIn} />
-            </Switch>
-        </Router>
+        <AuthProvider>
+            <Router>
+                <Switch>
+                    <Route exact path="/" component={NavBar} />
+                    <Route path="/signup" component={SignUp} />
+                    <Route path="/login" component={LogIn} />
+                    <Route path="/products" component={Products} />
+                </Switch>
+            </Router>
+        </AuthProvider>
     </div>
   );
 }

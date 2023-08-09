@@ -4,13 +4,28 @@ import { Link } from "react-router-dom"
 import { pink } from '@mui/material/colors';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import NavBar from '../NavBar/NavBar.js';
+import { useAuth } from '../../Contexts/AuthContext';
+
+import NavBar from '../NavBar/NavBar.js'; //Don't change this position
+
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom'; // Import useHistory
 
 const LogIn = () => {
+    const {         authUser,
+                    setAuthUser,
+                    signedIn,
+                    setSignedIn } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+
+    const history = useHistory(); // Get the history object
+
+    const navigateTo = (path) => {
+    history.push(path); // Use history.push to navigate to the specified path
+    };
 
     async function login(email, password) {
         //const param = window.btoa(`${email}:${password}`);
@@ -34,12 +49,15 @@ const LogIn = () => {
                 //console.log(result.token);
                 window.sessionStorage.setItem('access-token', result.token);
                 //window.location.href = './boards.html';
+                setSignedIn(true);
                 alert('Logged in successfully');
+                navigateTo('/products');
             } else {
                 const error = new Error();
                 error.message = result.message || 'Something went wrong.';
             }
         } catch(e) {
+            alert(`Error: ${e.message}`);
             alert('Email Address or Password is incorrect');
         }
     }
