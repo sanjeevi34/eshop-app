@@ -31,7 +31,8 @@ const LogIn = () => {
             const result = await rawResponse.json();
             if(rawResponse.ok) {
                 //window.sessionStorage.setItem('user-details', JSON.stringify(result));
-                window.sessionStorage.setItem('access-token', rawResponse.headers.get('token'));
+                //console.log(result.token);
+                window.sessionStorage.setItem('access-token', result.token);
                 //window.location.href = './boards.html';
                 alert('Logged in successfully');
             } else {
