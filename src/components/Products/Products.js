@@ -103,9 +103,14 @@ const Products = () => {
     };
 
     const filterAndSortProducts = (product) => {
-        if (selectedCategory === 'All' || product.category === selectedCategory) {
-            return product;
+
+        if(searchData == null || product.name.toLowerCase().includes(searchData.toLowerCase()))
+        {
+            if (selectedCategory === 'All' || product.category === selectedCategory) {
+                return product;
+            }
         }
+
         return null;
     };
 
