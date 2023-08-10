@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
             component="img"
             alt={product.name}
             height="200"
-            image={product.image}
+            image={product.imageUrl}
         />
         <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>

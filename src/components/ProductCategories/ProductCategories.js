@@ -9,11 +9,11 @@ const ProductCategories = ({ categories, selectedCategory, onSelectCategory }) =
         onChange={onSelectCategory}
         aria-label="Product Categories"
     >
-        {categories.map((category) => (
+        {(categories!= null) ? categories.map((category) => (
             <ToggleButton key={category} value={category}>
                 {category}
             </ToggleButton>
-        ))}
+        )) : null}
     </ToggleButtonGroup>
   );
 };

@@ -1,19 +1,18 @@
 import NavBar from '../NavBar/NavBar.js';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../Contexts/AuthContext';
 import { Typography, Container, Grid, Select, MenuItem, Box } from '@mui/material';
 import ProductCategories from '../ProductCategories/ProductCategories.js';
 import ProductCard from '../ProductCard/ProductCard.js';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
-// Instead of this, need to fetch from GET API. (@todo)
-const products = [
+/*const products1 = [
     {
         id: 1,
         name: 'OnePlus8T',
         price: 50000,
         category: 'Electronics',
-        image: 'https://oasis.opstatics.com/content/dam/oasis/default/product-specs/8t-green.png', // Replace with actual image URL
+        imageUrl: 'https://oasis.opstatics.com/content/dam/oasis/default/product-specs/8t-green.png', // Replace with actual image URL
         description: 'OnePlus phones are premium Android smartphones known for their powerful performance.',
     },
     {
@@ -21,7 +20,7 @@ const products = [
         name: 'boAt Airdopes Alpha True Wireless Earbuds',
         price: 5500,
         category: 'Electronics',
-        image: 'https://www.takemetechnically.com/wp-content/uploads/2023/07/boat-airdopes-alpha-64a304b5a1680.webp', // Replace with actual image URL
+        imageUrl: 'https://www.takemetechnically.com/wp-content/uploads/2023/07/boat-airdopes-alpha-64a304b5a1680.webp', // Replace with actual image URL
         description: 'boAt Airdopes Alpha True Wireless Earbuds',
     },
     {
@@ -29,11 +28,10 @@ const products = [
         name: 'NIKE Revolution Running Shoe',
         price: 13500,
         category: 'Apparel',
-        image: 'https://assets.ajio.com/medias/sys_master/root/20211224/1tuJ/61c4c229aeb26901101a2a6a/-473Wx593H-469034008-black-MODEL.jpg', // Replace with actual image URL
+        imageUrl: 'https://assets.ajio.com/medias/sys_master/root/20211224/1tuJ/61c4c229aeb26901101a2a6a/-473Wx593H-469034008-black-MODEL.jpg', // Replace with actual image URL
         description: 'NIKE Revolution 6 NN Running Shoes For Men (Black, 10)',
     }
-  // Add more product objects as needed
-];
+];*/
 
 const Products = () => {
     // AuthContext to store login details as global state.
@@ -46,11 +44,50 @@ const Products = () => {
     };
 
     // Local states
+    const [products, setProducts]                 = useState(null);
+    const [categories, setCategories]             = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('All'); // Category selection
     const [sorting, setSorting] = useState('Default');               // Sorting
 
-    // Need to change this based on GET API (@todo)
-    const categories = ['All', 'Electronics', 'Clothing', 'Accessories', 'Apparel']; // List of categories
+    // Need to change this based on GET API
+    //const categories = ['All', 'Electronics', 'Clothing', 'Accessories', 'Apparel']; // List of categories
+
+    // This fetch executes only the first time.
+    useEffect(() => {
+        // Make a GET request to fetch all the products
+        fetch('http://localhost:8080/api/products')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse the JSON response
+            })
+            .then(data => {
+                // Process the data returned from the API
+                setProducts(data);
+                console.log(data[0]);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        // Make a GET request to fetch all the product categories
+        fetch('http://localhost:8080/api/products/categories')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse the JSON response
+            })
+            .then(data => {
+                // Process the data returned from the API
+                setCategories(['All' , ...data]);
+                console.log(data[0]);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }, []);
 
     const handleSelectCategory = (event, newCategory) => {
         setSelectedCategory(newCategory);
@@ -83,11 +120,9 @@ const Products = () => {
         return 0; // Default: No sorting
     };
 
-    const sortedProducts = [...filteredProducts].sort(sortProducts);
-
-    const filteredAndSortedProducts = products
-        .filter(filterAndSortProducts)
-        .sort(sortProducts);
+    const filteredAndSortedProducts = (products != null )                                       ?
+                                      products.filter(filterAndSortProducts).sort(sortProducts) :
+                                      null;
 
     if(signedIn == true) {  //Change this condition to true
         return (
@@ -110,11 +145,12 @@ const Products = () => {
                             </Select>
                         </Box>
                         <Grid container spacing={3} sx={{ pt: 4 }}>
-                            {filteredAndSortedProducts.map((product) => (
-                                <Grid item xs={12} sm={6} md={4} key={product.id}>
-                                    <ProductCard product={product} />
-                                </Grid>
-                            ))}
+                            {(filteredAndSortedProducts != null) ?
+                                filteredAndSortedProducts.map((product) => (
+                                    <Grid item xs={12} sm={6} md={4} key={product.id}>
+                                        <ProductCard product={product} />
+                                    </Grid>
+                                )) : null}
                         </Grid>
                     </Box>
                 </Container>
