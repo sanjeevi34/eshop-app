@@ -46,11 +46,16 @@ const Products = () => {
     // Local states
     const [products, setProducts]                 = useState(null);      // Products
     const [categories, setCategories]             = useState(null);      // Category
+    const [searchData, setSearchData]             = useState(null);      // Search Data from NavBar
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
     const [sorting, setSorting]                   = useState('Default'); // Sorting
 
     // Need to change this based on GET API
     //const categories = ['All', 'Electronics', 'Clothing', 'Accessories', 'Apparel']; // List of categories
+
+    useEffect(() => {
+        console.log(searchData);
+    }, [searchData]);
 
     // This fetch executes only the first time.
     useEffect(() => {
@@ -122,7 +127,7 @@ const Products = () => {
     if(signedIn == true) {  //Change this condition to true
         return (
             <Box>
-                <NavBar loggedIn={true}/>
+                <NavBar loggedIn={true} searchDataCallBack={setSearchData}/>
                 Signed In
                 <Container>
                     <ProductCategories

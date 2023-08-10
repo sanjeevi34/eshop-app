@@ -62,7 +62,8 @@ const NavBar = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
 
     const handleChange = (event) => {
-    setSearchTerm(event.target.value);
+        setSearchTerm(event.target.value);
+        props.searchDataCallBack(event.target.value);
     };
 
     if (!props.loggedIn) {
