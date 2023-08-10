@@ -44,10 +44,10 @@ const Products = () => {
     };
 
     // Local states
-    const [products, setProducts]                 = useState(null);
-    const [categories, setCategories]             = useState(null);
-    const [selectedCategory, setSelectedCategory] = useState('All'); // Category selection
-    const [sorting, setSorting] = useState('Default');               // Sorting
+    const [products, setProducts]                 = useState(null);      // Products
+    const [categories, setCategories]             = useState(null);      // Category
+    const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
+    const [sorting, setSorting]                   = useState('Default'); // Sorting
 
     // Need to change this based on GET API
     //const categories = ['All', 'Electronics', 'Clothing', 'Accessories', 'Apparel']; // List of categories
@@ -65,7 +65,7 @@ const Products = () => {
             .then(data => {
                 // Process the data returned from the API
                 setProducts(data);
-                console.log(data[0]);
+                //console.log(data[0]);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -82,7 +82,7 @@ const Products = () => {
             .then(data => {
                 // Process the data returned from the API
                 setCategories(['All' , ...data]);
-                console.log(data[0]);
+                //console.log(data[0]);
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -92,11 +92,6 @@ const Products = () => {
     const handleSelectCategory = (event, newCategory) => {
         setSelectedCategory(newCategory);
     };
-
-    const filteredProducts =
-        selectedCategory === 'All'
-            ? products
-            : products.filter((product) => product.category === selectedCategory);
 
     const handleSortChange = (event) => {
         setSorting(event.target.value);
@@ -110,10 +105,10 @@ const Products = () => {
     };
 
     const sortProducts = (a, b) => {
-        if (sorting === 'PriceHighToLow') {
+        if (sorting === 'Price: HighToLow') {
             return parseFloat(b.price) - parseFloat(a.price);
         }
-        if (sorting === 'PriceLowToHigh') {
+        if (sorting === 'Price: LowToHigh') {
             return parseFloat(a.price) - parseFloat(b.price);
         }
         // Add sorting logic for other criteria if needed
@@ -140,8 +135,8 @@ const Products = () => {
                             <Typography variant="h6">Sort By:</Typography>
                             <Select value={sorting} onChange={handleSortChange}>
                                 <MenuItem value="Default">Default</MenuItem>
-                                <MenuItem value="PriceHighToLow">Price High to Low</MenuItem>
-                                <MenuItem value="PriceLowToHigh">Price Low to High</MenuItem>
+                                <MenuItem value="Price: HighToLow">Price: High to Low</MenuItem>
+                                <MenuItem value="Price: LowToHigh">Price: Low to High</MenuItem>
                             </Select>
                         </Box>
                         <Grid container spacing={3} sx={{ pt: 4 }}>
