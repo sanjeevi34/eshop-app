@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from "react-router-dom"
 
 const ProductCard = ({ product }) => {
   return (
@@ -35,9 +36,11 @@ const ProductCard = ({ product }) => {
             </Typography>
         </CardContent>
         <CardActions disableSpacing>
-            <Button variant="contained" size="small" color="primary">
-                Buy
-            </Button>
+            <Link to={"/product/" + product.id}>
+                <Button variant="contained" size="small" color="primary">
+                    Buy
+                </Button>
+            </Link>
             <Box sx={{ marginLeft: 'auto' }}>
                 <IconButton aria-label="edit">
                     <EditIcon />

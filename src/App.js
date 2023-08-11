@@ -16,7 +16,7 @@ import Products from './components/Products/Products.js'
 import LogIn from './components/LogIn/LogIn.js'
 import SignUp from './components/SignUp/SignUp.js'
 import NavBar from './components/NavBar/NavBar.js'
-
+import ProductDetails from './components/ProductDetails/ProductDetails.js'
 
 function App() {
   return (
@@ -27,7 +27,8 @@ function App() {
                     <Route exact path="/" component={NavBar} />
                     <Route path="/signup" component={SignUp} />
                     <Route path="/login" component={LogIn} />
-                    <Route path="/products" component={Products} />
+                    <Route path="/products" component={Products}/>
+                    <Route path="/product/:productName" component={ProductDetails}/>
                 </Switch>
             </Router>
         </AuthProvider>
