@@ -133,8 +133,9 @@ const Products = () => {
         return (
             <Box>
                 <NavBar loggedIn={true} searchEnable={true} searchDataCallBack={setSearchData}/>
-                Signed In
                 <Container>
+                    <Box sx={{ pb:2 }}>
+                    </Box>
                     <ProductCategories
                         categories={categories}
                         selectedCategory={selectedCategory}
