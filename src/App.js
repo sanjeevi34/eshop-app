@@ -31,7 +31,7 @@ function App() {
                     <Route path="/signup" component={SignUp} />
                     <Route path="/login" component={LogIn} />
                     <Route path="/products" component={Products}/>
-                    <Route path="/productStepper/:productName" component={ProductDetails}/>
+                    <Route path="/productStepper/:productName/:quantity" component={ProductDetails}/>
                     <Route path="/stepper" component={StepperMenu}/>
                     <Route path="/product/:productName" component={ProductDetailsWithoutStepper}/>
                     <Route path="/testing" component={Testing}/>

@@ -106,7 +106,7 @@ const ProductDetailsWithoutStepper = () => {
     } else {
       // Validation successful, continue with submission or other actions
       setQuantityError(false);
-      navigateTo('/productStepper/' + product.id);
+      navigateTo('/productStepper/' + product.id + '/' + quantity);
       //console.log(quantity);
     }
   };

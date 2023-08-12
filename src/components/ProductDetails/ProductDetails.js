@@ -27,10 +27,8 @@ import ProductCategories from '../ProductCategories/ProductCategories.js';
 const steps = ['Items', 'Select Address', 'Confirm Order'];
 
 const ProductDetails = () => {
-    const { productName } = useParams();
+    const { productName,  quantity} = useParams();
     const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
-    const [ quantity, setQuantity ] = useState("");
-    const [quantityError, setQuantityError] = useState(false);
     const [ product, setProduct] = useState(null);
     const [categories, setCategories] = useState(null);      // Category
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
