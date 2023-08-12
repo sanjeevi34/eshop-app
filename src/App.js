@@ -17,6 +17,9 @@ import LogIn from './components/LogIn/LogIn.js'
 import SignUp from './components/SignUp/SignUp.js'
 import NavBar from './components/NavBar/NavBar.js'
 import ProductDetails from './components/ProductDetails/ProductDetails.js'
+import ProductDetailsWithoutStepper from './components/ProductDetailsWithouStepper/ProductDetailsWithoutStepper.js'
+import StepperMenu from './components/StepperMenu/StepperMenu.js'
+import Testing from './components/Testing/Testing.js'
 
 function App() {
   return (
@@ -28,7 +31,10 @@ function App() {
                     <Route path="/signup" component={SignUp} />
                     <Route path="/login" component={LogIn} />
                     <Route path="/products" component={Products}/>
-                    <Route path="/product/:productName" component={ProductDetails}/>
+                    <Route path="/productStepper/:productName" component={ProductDetails}/>
+                    <Route path="/stepper" component={StepperMenu}/>
+                    <Route path="/product/:productName" component={ProductDetailsWithoutStepper}/>
+                    <Route path="/testing" component={Testing}/>
                 </Switch>
             </Router>
         </AuthProvider>

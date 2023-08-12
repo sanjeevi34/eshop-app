@@ -129,7 +129,7 @@ const Products = () => {
                                       products.filter(filterAndSortProducts).sort(sortProducts) :
                                       null;
 
-    if(signedIn == true) {  //Change this condition to true @todo
+    if(signedIn == false) {  //Change this condition to true @todo
         return (
             <Box>
                 <NavBar loggedIn={true} searchEnable={true} searchDataCallBack={setSearchData}/>

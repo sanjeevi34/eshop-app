@@ -2,7 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 import NavBar from '../NavBar/NavBar.js';
 import { useAuth } from '../../Contexts/AuthContext';
-import { Box, Container, Paper, Grid, Typography, TextField, Button } from '@mui/material';
+import { Box, Container, Divider, Paper, Grid, Typography, TextField, Button, NativeSelect } from '@mui/material';
+import {
+  Stepper,
+  Step,
+  StepLabel,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 import { useParams } from 'react-router-dom'; // Import useParams
 import ProductCategories from '../ProductCategories/ProductCategories.js';
 
@@ -15,6 +24,8 @@ import ProductCategories from '../ProductCategories/ProductCategories.js';
 //                    description: 'OnePlus phones are premium Android smartphones known for their powerful performance.',
 //                };
 
+const steps = ['Items', 'Select Address', 'Confirm Order'];
+
 const ProductDetails = () => {
     const { productName } = useParams();
     const { authUser, setAuthUser, signedIn, setSignedIn } = useAuth();
@@ -23,6 +34,15 @@ const ProductDetails = () => {
     const [ product, setProduct] = useState(null);
     const [categories, setCategories] = useState(null);      // Category
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
+
+//Add address
+    const [name, setName] = useState();
+    const [number, setNumber] = useState();
+    const [street, setStreet] = useState();
+    const [city, setCity] = useState();
+    const [state, setState] = useState();
+    const [landmark, setLandmark] = useState();
+    const [zipcode, setZipcode] = useState();
 
     // To Navigate the pages.
     const history = useHistory(); // Get the history object
@@ -72,52 +92,44 @@ const ProductDetails = () => {
             });
     }, []);
 
-  const handleQuantityChange = (event) => {
-    const inputValue = event.target.value;
-    // Use a regular expression to check if the input consists of only numeric characters
-    if (/^\d*$/.test(inputValue)) {
-      setQuantity(inputValue);
-      setQuantityError(false);
-    } else {
-      setQuantityError(true);
+/*----<Stepper Menu>-----*/
+    const [activeStep, setActiveStep] = useState(0);
+    const [nextButton, setNextButton] = useState("NEXT");
+
+    useEffect(() => {
+        if(activeStep == 2)
+        {
+            setNextButton("PLACE ORDER");
+        }
+        else
+        {
+            setNextButton("NEXT");
+        }
+    },[activeStep]);
+
+  const handleNext = () => {
+    if(activeStep < 2)
+    {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    }
+    else
+    {
+        //Do Place Order
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // Perform validation before submitting
-    if ((!quantity || !/^\d*$/.test(quantity)) ||
-        (quantity == 0)                        ||
-        (quantity > product.availableItems))
-    {
-      setQuantityError(true);
-    } else {
-      // Validation successful, continue with submission or other actions
-      setQuantityError(false);
-      //console.log(quantity);
-    }
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    console.log(activeStep);
   };
 
-if(signedIn == true) {  // Should make this true by default @todo
-    if(product == null)
-    {
-        return (
-            <NavBar loggedIn={true}/>
-        )
-    }
-    else {
+  const getStepContent = step => {
+    switch (step) {
+      case 0:
         return (
         <Box>
-            <NavBar loggedIn={true}/>
-            <Box sx={{ pb: 2 }}>
-            </Box>
-            <ProductCategories
-                categories={categories}
-                selectedCategory={selectedCategory}
-                onSelectCategory={handleSelectCategory}
-            />
-            <Container maxWidth="lg" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+            <Box sx={{pb:1}}/>
+            <Container maxWidth="md" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <Grid container justifyContent="center" alignItems="center" spacing={2}>
                   <Grid item xs={6}>
                     <img src={product.imageUrl} alt={product.name} style={{ width: '100%' }} />
@@ -128,46 +140,203 @@ if(signedIn == true) {  // Should make this true by default @todo
                         <Grid item xs="auto">
                         <Typography variant="h4">{product.name}</Typography>
                         </Grid>
-                        <Grid item xs="auto">
-                        <Box
-                            sx={{
-                              bgcolor: 'primary.main',
-                              color: 'primary.contrastText',
-                              p: 1,
-                              pl: 2,
-                              pr: 2,
-                              marginLeft: 2,
-                              borderRadius: 10
-                            }}
-                        >
-                            Available Quantity: {product.availableItems}
-                        </Box>
-                        </Grid>
                     </Box>
                     <Typography variant="subtitle1" sx={{ pt: 2}}>Category: <b>{product.category}</b></Typography>
                     <Typography variant="body1" sx={{ pt: 2}}>{product.description}</Typography>
-                    <Typography variant="h6" color="error" sx={{ pt: 2}}>Price: {'₹' + product.price}</Typography>
-                    <form autoComplete="off" onSubmit={handleSubmit}>
-                        <TextField
-                          label="Enter Quantity"
-                          variant="outlined"
-                          fullWidth
-                          margin="normal"
-                          required
-                          onChange={handleQuantityChange}
-                          onChange={handleQuantityChange}
-                          helperText={quantityError ? 'Please enter a valid numeric quantity' : ''}
-                          value={quantity}
-                        />
-                        <Grid item xs="auto">
-                            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2}}>Place Order</Button>
-                        </Grid>
-                    </form>
                   </Grid>
                 </Grid>
             </Container>
         </Box>
       );
+      case 1:
+        return (
+          /* Content for the "Select Address" step */
+          <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <InputLabel variant="standard" htmlFor="uncontrolled-native">
+              Select Address
+            </InputLabel>
+            <NativeSelect sx={{ width: '150%' }}
+              defaultValue={0}
+              inputProps={{
+                name: 'age',
+                id: 'uncontrolled-native',
+              }}
+            >
+              <option value={0}></option>
+              <option value={10}>Ten</option>
+              <option value={20}>Twenty</option>
+              <option value={30}>Thirty</option>
+            </NativeSelect>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center', // Center vertically
+                    minHeight: '60vh', // Adjust height to fill the viewport
+                    padding: '20px',
+                    width: '400px', margin: 'auto' }}>
+                <Typography variant="body1" sx={{ marginBottom: 3}}>-OR-</Typography>
+                <Typography variant="body1" sx={{ marginBottom: 3}}>Add Address</Typography>
+                <TextField
+                    type="text"
+                    variant='outlined'
+                    color='primary'
+                    label="Name"
+                    onChange={e => setName(e.target.value)}
+                    value={name}
+                    fullWidth
+                    required
+                    sx={{mb: 2}}
+                />
+                <TextField
+                    type="tel"
+                    variant='outlined'
+                    color='primary'
+                    label="Contact Number"
+                    onChange={e => setNumber(e.target.value)}
+                    value={number}
+                    fullWidth
+                    required
+                    sx={{mb: 2}}
+                />
+                <TextField
+                    type="text"
+                    variant='outlined'
+                    color='primary'
+                    label="Street"
+                    onChange={e => setStreet(e.target.value)}
+                    value={street}
+                    fullWidth
+                    required
+                    sx={{mb: 2}}
+                />
+                <TextField
+                    type="text"
+                    variant='outlined'
+                    color='primary'
+                    label="City"
+                    onChange={e => setCity(e.target.value)}
+                    value={city}
+                    required
+                    fullWidth
+                    sx={{mb: 2}}
+                />
+                <TextField
+                    type="text"
+                    variant='outlined'
+                    color='primary'
+                    label="State"
+                    onChange={e => setState(e.target.value)}
+                    value={state}
+                    required
+                    fullWidth
+                    sx={{mb: 2}}
+                />
+                <TextField
+                    type="text"
+                    variant='outlined'
+                    color='primary'
+                    label="Landmark"
+                    onChange={e => setLandmark(e.target.value)}
+                    value={landmark}
+                    fullWidth
+                    sx={{mb: 2}}
+                />
+                <TextField
+                    type="number"
+                    variant='outlined'
+                    color='primary'
+                    label="Zip Code"
+                    onChange={e => setZipcode(e.target.value)}
+                    value={zipcode}
+                    fullWidth
+                    required
+                    sx={{mb: 2}}
+                />
+                <Button variant="contained" color="primary" type="submit" fullWidth>SAVE ADDRESS</Button>
+            </div>
+          </Container>
+        );
+      case 2:
+        return (
+          /* Content for the "Confirm Order" step */
+    <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Paper elevation={3} style={{ display: 'flex', padding: '8%', paddingBottom: '12%' }} sx={{ width: '98%' }}>
+        <Grid container spacing={3} justifyContent="space-between">
+          {/* Left Side (Product Details) */}
+          <Grid item xs={7} align="left" container direction="column">
+            <Typography variant="h4" sx={{mb: 1}}>{product.name}</Typography>
+            <Typography variant="subtitle1" sx={{mb: 1}}>Quantity: <b>{quantity}</b></Typography>
+            <Typography variant="subtitle1" sx={{mb: 1}}>Category: {product.category}</Typography>
+            <Typography variant="body1" sx={{mb: 1}}><i>{product.description}</i></Typography>
+            <Typography color="error" variant="h6">Total Price: {'₹ ' + product.price * quantity}</Typography>
+          </Grid>
+
+          {/* Vertical Line */}
+          <Divider orientation="vertical" flexItem />
+
+          {/* Right Side (User Address) */}
+          <Grid xs={4} container direction="column" align="left" sx={{pt: 3}}>
+            <Typography variant="h4" sx={{mb: 1}}>Address Details :</Typography>
+            <Typography>{name}</Typography>
+            <Typography>Contact Number: {number}</Typography>
+            <Typography>{street + ", " + city}</Typography>
+            <Typography>{state}</Typography>
+            <Typography>{zipcode}</Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
+        );
+      default:
+        return null;
+    }
+  };
+/*----->Stepper Menu<-----*/
+
+if(signedIn == false) {  // Should make this true by default @todo
+    if(product == null)
+    {
+        return (
+            <NavBar loggedIn={true}/>
+        )
+    }
+    else {
+        return (
+    <Box>
+      <NavBar loggedIn={true}/>
+      <Box sx={{marginBottom:5}}></Box>
+    <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Paper sx={{ width: '100%' }}>
+        <Box p={1}>
+          <Stepper activeStep={activeStep}>
+            {steps.map((label, index) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </Box>
+      </Paper>
+      <div style={{ marginTop: '20px' }}>
+        {getStepContent(activeStep)}
+      </div>
+      <div style={{ marginTop: '2%', marginBottom: '10%', display: 'flex', justifyContent: 'space-between' }}>
+        <Button disabled={activeStep === 0} onClick={handleBack} sx={{pr:3}}>
+          Back
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleNext}
+          disabled={activeStep === steps.length}
+        >
+          {nextButton}
+        </Button>
+      </div>
+    </Container>
+    </Box>
+  );
     }
     }
     else {
