@@ -62,6 +62,10 @@ const NavBar = (props) => {
         navigateTo('/');
     };
 
+    const addProduct = () => {
+            navigateTo('/addProduct');
+    };
+
     const [searchTerm, setSearchTerm] = useState("");
 
     const handleChange = (event) => {
@@ -164,6 +168,7 @@ const NavBar = (props) => {
                           component="button"
                           variant="h6"
                           sx={{color: 'white', pr: 4}}
+                          onClick={() => addProduct()}
                         >
                           Add Product
                         </Link>
