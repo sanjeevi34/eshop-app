@@ -173,7 +173,7 @@ const LogIn = () => {
                     fullWidth
                     sx={{mb: 3}}
                 />
-                <Button variant="contained" color="primary" type="submit" fullWidth>SIGN IN</Button>
+                <Button variant="contained" color="primary" type="submit" fullWidth sx={{bgcolor: '#3f51b5'}}>SIGN IN</Button>
             </form>
             <div style={{display: 'flex', justifyContent:'flex-start', padding: '20px 0 0 0'}}>
                 <small><Link to="/signup">Don't have an account? Sign up</Link></small>

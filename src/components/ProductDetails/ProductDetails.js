@@ -275,7 +275,7 @@ const ProductDetails = () => {
                         required
                         sx={{mb: 2}}
                     />
-                    <Button variant="contained" color="primary" type="submit" fullWidth>SAVE ADDRESS</Button>
+                    <Button variant="contained" color="primary" type="submit" fullWidth sx={{bgcolor: '#3f51b5'}}>SAVE ADDRESS</Button>
                 </form>
             </div>
           </Container>
@@ -353,6 +353,7 @@ if(signedIn == true) {  // Should make this true by default @todo
           color="primary"
           onClick={handleNext}
           disabled={activeStep === steps.length}
+          sx={{bgcolor: '#3f51b5'}}
         >
           {nextButton}
         </Button>

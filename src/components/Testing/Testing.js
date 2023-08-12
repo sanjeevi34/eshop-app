@@ -7,9 +7,50 @@ import {
   CardActions,
   Button,
   IconButton,
-  Box
+  Box,
+  Grid
 } from '@mui/material';
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
 
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "75%",
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
 
 const Testing = ({ product }) => {
     const accessToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmNAZ21haWwuY29tIiwiaWF0IjoxNjkxODM3OTUxLCJleHAiOjE2OTE4NDYzNTF9.ykI2uY43B8CqIRW_ORGSDKdJxxB6vgFSVcU1oeTl8-KwKfU0tpqgQuLbJ_viIrzo3sNZhJE5wZaqVo8hrOV0Dw';
@@ -108,6 +149,8 @@ const Testing = ({ product }) => {
           console.error('Fetch error:', error);
         });*/
 
+
+/*
         const apiUrl4 = "http://localhost:8080/api/users";
         const headers = new Headers();
         headers.append('Authorization', `Bearer ${accessToken}`);
@@ -124,9 +167,23 @@ const Testing = ({ product }) => {
           })
           .catch(error => {
             console.error("Not admin");
-          });
+          });*/
+
+
+        //const { searchText, onSearchChange } = props;
         return (
-            <Button>Test</Button>
+        <Grid item xs={3} sx={{bgcolor: '#3f51b5'}}>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                defaultValue="Search..."
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+            </Grid>
         );
 
 

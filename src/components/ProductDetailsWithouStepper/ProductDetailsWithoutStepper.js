@@ -144,7 +144,7 @@ if(signedIn == true) {  // Should make this true by default @todo
                         <Grid item xs="auto">
                         <Box
                             sx={{
-                              bgcolor: 'primary.main',
+                              bgcolor: '#3f51b5',
                               color: 'primary.contrastText',
                               p: 1,
                               pl: 2,
@@ -173,7 +173,7 @@ if(signedIn == true) {  // Should make this true by default @todo
                           value={quantity}
                         />
                         <Grid item xs="auto">
-                            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2}} >Place Order</Button>
+                            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2, bgcolor: '#3f51b5',}} >Place Order</Button>
                         </Grid>
                     </form>
                   </Grid>

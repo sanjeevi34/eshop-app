@@ -52,7 +52,7 @@ const ProductCard = ({ product }) => {
             </CardContent>
             <CardActions disableSpacing>
                 <Link to={"/product/" + product.id}>
-                    <Button variant="contained" size="small" color="primary">
+                    <Button variant="contained" size="small" color="primary" sx={{bgcolor: '#3f51b5'}}>
                         Buy
                     </Button>
                 </Link>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Box,Typography} from "@mui/material";
-import { TextField, Button, Container, Stack } from '@mui/material';
+import { TextField, Button, Container, Stack, Avatar } from '@mui/material';
 import { Link } from "react-router-dom"
 import { pink } from '@mui/material/colors';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -163,7 +163,7 @@ const SignUp = () => {
                         fullWidth
                         sx={{mb: 3}}
                     />
-                    <Button variant="contained" color="primary" type="submit" fullWidth>SIGN UP</Button>
+                    <Button variant="contained" color="primary" type="submit" fullWidth sx={{bgcolor: '#3f51b5'}}>SIGN UP</Button>
                 </form>
                 <div style={{display: 'flex', justifyContent:'flex-end', padding: '20px 0 0 0'}}>
                     <small><Link to="/login">Already have an account? Sign in</Link></small>

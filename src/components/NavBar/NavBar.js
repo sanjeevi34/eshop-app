@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import Link from '@mui/material/Link';
-import Button from '@mui/material-next/Button';
+
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { Container, InputAdornment, TextField, makeStyles } from "@mui/material";
+import { styled, alpha } from "@mui/material/styles";
 
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import InputBase from "@mui/material/InputBase";
 
 import { useHistory } from 'react-router-dom'; // Import useHistory
 import {
@@ -14,11 +16,49 @@ import {
   IconButton,
   Toolbar,
   Typography,
-  Grid
+  Grid,
+  Button
 } from "@mui/material";
-import styles from './NavBar.css';
 
 import { useAuth } from '../../Contexts/AuthContext';
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "75%",
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
 
 const NavBar = (props) => {
 
@@ -82,19 +122,18 @@ const NavBar = (props) => {
 
     if (!props.loggedIn) {
         return (
-            <AppBar position="sticky" sx={{bgcolor: '#3f51b5'}}>
+            <AppBar position="static" sx={{bgcolor: '#3f51b5'}}>
                 <Toolbar>
                     <IconButton
                         size="large"
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
                     >
                         <ShoppingCartIcon />
                     </IconButton>
                     <Typography
-                        variant="h6"
+                        variant="body1"
                         component="div"
                         align="left"
                         sx={{ flexGrow: 1}}
@@ -113,7 +152,7 @@ const NavBar = (props) => {
                     <Link
                       component="button"
                       variant="body1"
-                      sx={{color: 'white', pr: 2, textDecoration: 'underline',}}
+                      sx={{color: 'white', pr: 2, textDecoration: 'underline'}}
                       onClick={() => navigateTo('/signup')}
                     >
                       Sign Up
@@ -124,63 +163,78 @@ const NavBar = (props) => {
     }
     if (props.loggedIn) {
        return (
-            <AppBar position="sticky" sx={{bgcolor: '#3f51b5'}}>
+            <AppBar position="static" sx={{bgcolor: '#3f51b5'}}>
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
-                        <ShoppingCartIcon />
-                    </IconButton>
+                    <Grid container spacing={2}>
 
-                    <Typography
-                        variant="h6"
-                        component="div"
-                        align="left"
-                        sx={{ flexGrow: 1}}
-                    >
-                        upGrad E-Shop
-                    </Typography>
+                   <Grid item xs={5} alignItems="left">
+                        <Typography align="left">
+                            <IconButton
+                              size="small"
+                              edge="start"
+                              color="inherit"
+                              aria-label="menu"
+                              disableRipple
+                            >
+                          <ShoppingCartIcon sx={{pr:1}}/>
+                          <Typography variant="body1" component="span" align="left">
+                            upGrad E-Shop
+                          </Typography>
+                          </IconButton>
+                      </Typography>
+                    </Grid>
+                        {/*<TextField
+                          placeholder="Search..."
+                          variant="filled"
+                          sx={{ flex: 1, pr:30, pl:30}}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start" sx={{ alignSelf: 'center' }}>
+                                <SearchIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                          onChange={handleChange}
+                        />*/}
+                        <Grid item xs={3}>
+                            <Search>
+                              <SearchIconWrapper>
+                                <SearchIcon />
+                              </SearchIconWrapper>
+                              <StyledInputBase
+                                placeholder="Search..."
+                                inputProps={{ "aria-label": "search" }}
+                                onChange={handleChange}
+                              />
+                            </Search>
+                        </Grid>
+                        <Grid item xs={4} textAlign={"right"} justifyContent="flex-end">
+                            <Link
+                              component="button"
+                              variant="body1"
+                              sx={{color: 'white', pr: 4, textDecoration: 'underline'}}
+                              onClick={() => homeClicked()}
+                            >
+                              Home
+                            </Link>
 
-                    <TextField
-                      placeholder="Search..."
-                      variant="filled"
-                      sx={{ flex: 1, pr:30, pl:30}}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start" sx={{ alignSelf: 'center' }}>
-                            <SearchIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      onChange={handleChange}
-                    />
+                            {   props.isAdmin &&
+                                <Link
+                                  component="button"
+                                  variant="body1"
+                                  sx={{color: 'white', pr: 4, textDecoration: 'underline'}}
+                                  onClick={() => addProduct()}
+                                >
+                                  Add Product
+                                </Link>
+                            }
 
-                    <Link
-                      component="button"
-                      variant="h6"
-                      sx={{color: 'white', pr: 4}}
-                      onClick={() => homeClicked()}
-                    >
-                      Home
-                    </Link>
+                            <Button variant="contained" color="error" onClick={() => loggingOut()}>
+                                LOGOUT
+                            </Button>
 
-                    {   props.isAdmin &&
-                        <Link
-                          component="button"
-                          variant="h6"
-                          sx={{color: 'white', pr: 4}}
-                          onClick={() => addProduct()}
-                        >
-                          Add Product
-                        </Link>
-                    }
-                    <Button variant="contained" color="secondary" onClick={() => loggingOut()}>
-                        LOGOUT
-                    </Button>
+                        </Grid>
+                    </Grid>
                 </Toolbar>
             </AppBar>
         )
