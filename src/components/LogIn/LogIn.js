@@ -1,16 +1,17 @@
 import React, {useState} from "react";
-import { Box, Typography, TextField, FormControl, Button, Snackbar } from "@mui/material";
+import { Box, Typography, TextField, FormControl, Button, Snackbar, Avatar } from "@mui/material";
 import { Link } from "react-router-dom"
 import { pink } from '@mui/material/colors';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import MuiAlert from '@mui/material/Alert';
-
+import LockIcon from "@mui/icons-material/Lock";
 import { useAuth } from '../../Contexts/AuthContext';
 
 import NavBar from '../NavBar/NavBar.js'; //Don't change this position
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useHistory } from 'react-router-dom'; // Import useHistory
+
+import "./Login.css";
 
 const LogIn = () => {
     const {         authUser,
@@ -130,15 +131,9 @@ const LogIn = () => {
                       </MuiAlert>
             </Snackbar>
             <Box>
-                {/*<Box display="flex"      sx={{
-                             borderRadius: '50%',
-                             width: 50,
-                             height: 50,
-                             backgroundColor: pink[600],
-                           }}>
-                           */}
-                    <LockOutlinedIcon fontSize="large" sx={{ color: pink[500] }}/>
-                {/*</Box>*/}
+                <Avatar className="avatarStyle">
+                    <LockIcon />
+                </Avatar>
                 <Typography
                     variant="h6"
                     component="div"

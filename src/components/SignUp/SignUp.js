@@ -4,6 +4,7 @@ import { TextField, Button, Container, Stack, Avatar } from '@mui/material';
 import { Link } from "react-router-dom"
 import { pink } from '@mui/material/colors';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockIcon from "@mui/icons-material/Lock";
 
 import styles from './SignUp.css';
 
@@ -78,15 +79,9 @@ const SignUp = () => {
                     padding: '20px',
                     width: '400px', margin: 'auto' }}>
                 <Box>
-                    {/*<Box display="flex"      sx={{
-                                 borderRadius: '50%',
-                                 width: 50,
-                                 height: 50,
-                                 backgroundColor: pink[600],
-                               }}>
-                               */}
-                        <LockOutlinedIcon fontSize="large" sx={{ color: pink[500] }}/>
-                    {/*</Box>*/}
+                    <Avatar className="avatarStyle">
+                        <LockIcon />
+                    </Avatar>
                     <Typography
                         variant="h6"
                         component="div"
