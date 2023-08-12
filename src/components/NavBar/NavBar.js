@@ -25,7 +25,9 @@ const NavBar = (props) => {
     const { authUser,
             setAuthUser,
             signedIn,
-            setSignedIn } = useAuth();
+            setSignedIn,
+            isAdmin,
+            setIsAdmin} = useAuth();
 
     const [user, setUser] = useState(null);
 
@@ -55,6 +57,7 @@ const NavBar = (props) => {
 
     const loggingOut = () => {
         setSignedIn(false);
+        setIsAdmin(false);
         window.sessionStorage.removeItem('access-token');
         navigateTo('/');
     };
@@ -156,13 +159,15 @@ const NavBar = (props) => {
                       Home
                     </Link>
 
-                    <Link
-                      component="button"
-                      variant="h6"
-                      sx={{color: 'white', pr: 4}}
-                    >
-                      Add Product
-                    </Link>
+                    {   props.isAdmin &&
+                        <Link
+                          component="button"
+                          variant="h6"
+                          sx={{color: 'white', pr: 4}}
+                        >
+                          Add Product
+                        </Link>
+                    }
                     <Button variant="contained" color="secondary" onClick={() => loggingOut()}>
                         LOGOUT
                     </Button>

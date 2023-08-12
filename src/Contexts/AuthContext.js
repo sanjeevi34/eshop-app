@@ -9,20 +9,15 @@ export function useAuth() {
 export function AuthProvider(props){
     const [authUser, setAuthUser] = useState(null);
     const [signedIn, setSignedIn] = useState(false);
-
-    const setSignIn = (userData) => {
-        setSignedIn(true);
-    }
-
-    const setSignOut = (userData) => {
-        setSignedIn(false);
-    }
+    const [isAdmin,  setIsAdmin]  = useState(false);
 
     const authContextValue = {
         authUser,
         setAuthUser,
         signedIn,
-        setSignedIn
+        setSignedIn,
+        isAdmin,
+        setIsAdmin
     };
 
     return(

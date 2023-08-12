@@ -28,7 +28,7 @@ const steps = ['Items', 'Select Address', 'Confirm Order'];
 
 const ProductDetails = () => {
     const { productName } = useParams();
-    const { authUser, setAuthUser, signedIn, setSignedIn } = useAuth();
+    const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
     const [ quantity, setQuantity ] = useState("");
     const [quantityError, setQuantityError] = useState(false);
     const [ product, setProduct] = useState(null);
@@ -294,17 +294,17 @@ const ProductDetails = () => {
   };
 /*----->Stepper Menu<-----*/
 
-if(signedIn == false) {  // Should make this true by default @todo
+if(signedIn == true) {  // Should make this true by default @todo
     if(product == null)
     {
         return (
-            <NavBar loggedIn={true}/>
+            <NavBar loggedIn={true} isAdmin={isAdmin}/>
         )
     }
     else {
         return (
     <Box>
-      <NavBar loggedIn={true}/>
+      <NavBar loggedIn={true} isAdmin={isAdmin}/>
       <Box sx={{marginBottom:5}}></Box>
     <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Paper sx={{ width: '100%' }}>

@@ -19,7 +19,7 @@ import ProductCategories from '../ProductCategories/ProductCategories.js';
 
 const ProductDetailsWithoutStepper = () => {
     const { productName } = useParams();
-    const { authUser, setAuthUser, signedIn, setSignedIn } = useAuth();
+    const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
     const [ quantity, setQuantity ] = useState("");
     const [quantityError, setQuantityError] = useState(false);
     const [ product, setProduct] = useState(null);
@@ -111,17 +111,17 @@ const ProductDetailsWithoutStepper = () => {
     }
   };
 
-if(signedIn == false) {  // Should make this true by default @todo
+if(signedIn == true) {  // Should make this true by default @todo
     if(product == null)
     {
         return (
-            <NavBar loggedIn={true}/>
+            <NavBar loggedIn={true} isAdmin={isAdmin}/>
         )
     }
     else {
         return (
     <Box>
-      <NavBar loggedIn={true}/>
+      <NavBar loggedIn={true} isAdmin={isAdmin}/>
       <Box sx={{marginBottom:5}}></Box>
         <Box>
             <ProductCategories

@@ -35,7 +35,7 @@ import { useHistory } from 'react-router-dom'; // Import useHistory
 
 const Products = () => {
     // AuthContext to store login details as global state.
-    const { authUser, setAuthUser, signedIn, setSignedIn } = useAuth();
+    const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
 
     // To Navigate the pages.
     const history = useHistory(); // Get the history object
@@ -129,10 +129,10 @@ const Products = () => {
                                       products.filter(filterAndSortProducts).sort(sortProducts) :
                                       null;
 
-    if(signedIn == false) {  //Change this condition to true @todo
+    if(signedIn == true) {  //Change this condition to true @todo
         return (
             <Box>
-                <NavBar loggedIn={true} searchEnable={true} searchDataCallBack={setSearchData}/>
+                <NavBar loggedIn={true} searchEnable={true} isAdmin={isAdmin} searchDataCallBack={setSearchData}/>
                 <Container>
                     <Box sx={{ pb:2 }}>
                     </Box>

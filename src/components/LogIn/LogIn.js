@@ -15,7 +15,10 @@ const LogIn = () => {
     const {         authUser,
                     setAuthUser,
                     signedIn,
-                    setSignedIn } = useAuth();
+                    setSignedIn,
+                    isAdmin,
+                    setIsAdmin} = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState(false);
@@ -49,6 +52,30 @@ const LogIn = () => {
                 //console.log(result.token);
                 window.sessionStorage.setItem('access-token', result.token);
                 //window.location.href = './boards.html';
+
+                /*Check whether it is the admin who logged in*/
+                    const accessToken = result.token;
+                    const apiUrl4 = "http://localhost:8080/api/users";
+                    const headers = new Headers();
+                    headers.append('Authorization', `Bearer ${accessToken}`);
+
+                    fetch(apiUrl4, { method: 'GET', headers })
+                      .then(response => {
+                        if (!response.ok) {
+                          throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                      })
+                      .then(data => {
+                        //console.log(data);
+                        setIsAdmin(true);
+                      })
+                      .catch(error => {
+                        //console.error("Not admin");
+                        setIsAdmin(false);
+                      });
+                /*-------------------*/
+
                 setSignedIn(true);
                 alert('Logged in successfully');
                 navigateTo('/products');
