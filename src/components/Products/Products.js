@@ -53,9 +53,9 @@ const Products = () => {
     // Need to change this based on GET API
     //const categories = ['All', 'Electronics', 'Clothing', 'Accessories', 'Apparel']; // List of categories
 
-    useEffect(() => {
+    /*useEffect(() => {
         console.log(searchData);
-    }, [searchData]);
+    }, [searchData]);*/
 
     // This fetch executes only the first time.
     useEffect(() => {
@@ -148,6 +148,7 @@ const Products = () => {
                                 <MenuItem value="Default">Default</MenuItem>
                                 <MenuItem value="Price: HighToLow">Price: High to Low</MenuItem>
                                 <MenuItem value="Price: LowToHigh">Price: Low to High</MenuItem>
+                                <MenuItem value="Newest">Newest</MenuItem>
                             </Select>
                         </Box>
                         <Grid container spacing={3} sx={{ pt: 4 }}>
