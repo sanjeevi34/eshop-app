@@ -62,6 +62,10 @@ const NavBar = (props) => {
         navigateTo('/');
     };
 
+    const homeClicked = () => {
+        navigateTo('/products');
+    };
+
     const addProduct = () => {
             navigateTo('/addProduct');
     };
@@ -159,6 +163,7 @@ const NavBar = (props) => {
                       component="button"
                       variant="h6"
                       sx={{color: 'white', pr: 4}}
+                      onClick={() => homeClicked()}
                     >
                       Home
                     </Link>
