@@ -21,6 +21,7 @@ import ProductDetailsWithoutStepper from './components/ProductDetailsWithouStepp
 import StepperMenu from './components/StepperMenu/StepperMenu.js'
 import Testing from './components/Testing/Testing.js'
 import AddProduct from './components/AddProduct/AddProduct.js'
+import ModifyProduct from './components/ModifyProduct/ModifyProduct.js'
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/product/:productName" component={ProductDetailsWithoutStepper}/>
                     <Route path="/testing" component={Testing}/>
                     <Route path="/addProduct" component={AddProduct}/>
+                    <Route path="/modifyProduct" component={ModifyProduct}/>
                 </Switch>
             </Router>
         </AuthProvider>

@@ -16,15 +16,6 @@ import {
 import { useParams } from 'react-router-dom'; // Import useParams
 import ProductCategories from '../ProductCategories/ProductCategories.js';
 
-//const product = {
-//                    id: 1,
-//                    name: 'OnePlus8T',
-//                    price: 50000,
-//                    category: 'Electronics',
-//                    imageUrl: 'https://oasis.opstatics.com/content/dam/oasis/default/product-specs/8t-green.png', // Replace with actual image URL
-//                    description: 'OnePlus phones are premium Android smartphones known for their powerful performance.',
-//                };
-
 const steps = ['Items', 'Select Address', 'Confirm Order'];
 
 const ProductDetails = () => {
@@ -141,6 +132,10 @@ const ProductDetails = () => {
     setSelectedAddress(event.target.value);
   };
 
+    const handleSaveAddress = () => {
+        //Save Address API @todo
+    }
+
   const getStepContent = step => {
     switch (step) {
       case 0:
@@ -203,83 +198,85 @@ const ProductDetails = () => {
                     width: '400px', margin: 'auto' }}>
                 <Typography variant="body1" sx={{ marginBottom: 3}}>-OR-</Typography>
                 <Typography variant="body1" sx={{ marginBottom: 3}}>Add Address</Typography>
-                <TextField
-                    type="text"
-                    variant='outlined'
-                    color='primary'
-                    label="Name"
-                    onChange={e => setName(e.target.value)}
-                    value={name}
-                    fullWidth
-                    required
-                    sx={{mb: 2}}
-                />
-                <TextField
-                    type="tel"
-                    variant='outlined'
-                    color='primary'
-                    label="Contact Number"
-                    onChange={e => setNumber(e.target.value)}
-                    value={number}
-                    fullWidth
-                    required
-                    sx={{mb: 2}}
-                />
-                <TextField
-                    type="text"
-                    variant='outlined'
-                    color='primary'
-                    label="Street"
-                    onChange={e => setStreet(e.target.value)}
-                    value={street}
-                    fullWidth
-                    required
-                    sx={{mb: 2}}
-                />
-                <TextField
-                    type="text"
-                    variant='outlined'
-                    color='primary'
-                    label="City"
-                    onChange={e => setCity(e.target.value)}
-                    value={city}
-                    required
-                    fullWidth
-                    sx={{mb: 2}}
-                />
-                <TextField
-                    type="text"
-                    variant='outlined'
-                    color='primary'
-                    label="State"
-                    onChange={e => setState(e.target.value)}
-                    value={state}
-                    required
-                    fullWidth
-                    sx={{mb: 2}}
-                />
-                <TextField
-                    type="text"
-                    variant='outlined'
-                    color='primary'
-                    label="Landmark"
-                    onChange={e => setLandmark(e.target.value)}
-                    value={landmark}
-                    fullWidth
-                    sx={{mb: 2}}
-                />
-                <TextField
-                    type="number"
-                    variant='outlined'
-                    color='primary'
-                    label="Zip Code"
-                    onChange={e => setZipcode(e.target.value)}
-                    value={zipcode}
-                    fullWidth
-                    required
-                    sx={{mb: 2}}
-                />
-                <Button variant="contained" color="primary" type="submit" fullWidth>SAVE ADDRESS</Button>
+                <form onSubmit={handleSaveAddress}>
+                    <TextField
+                        type="text"
+                        variant='outlined'
+                        color='primary'
+                        label="Name"
+                        onChange={e => setName(e.target.value)}
+                        value={name}
+                        fullWidth
+                        required
+                        sx={{mb: 2}}
+                    />
+                    <TextField
+                        type="tel"
+                        variant='outlined'
+                        color='primary'
+                        label="Contact Number"
+                        onChange={e => setNumber(e.target.value)}
+                        value={number}
+                        fullWidth
+                        required
+                        sx={{mb: 2}}
+                    />
+                    <TextField
+                        type="text"
+                        variant='outlined'
+                        color='primary'
+                        label="Street"
+                        onChange={e => setStreet(e.target.value)}
+                        value={street}
+                        fullWidth
+                        required
+                        sx={{mb: 2}}
+                    />
+                    <TextField
+                        type="text"
+                        variant='outlined'
+                        color='primary'
+                        label="City"
+                        onChange={e => setCity(e.target.value)}
+                        value={city}
+                        required
+                        fullWidth
+                        sx={{mb: 2}}
+                    />
+                    <TextField
+                        type="text"
+                        variant='outlined'
+                        color='primary'
+                        label="State"
+                        onChange={e => setState(e.target.value)}
+                        value={state}
+                        required
+                        fullWidth
+                        sx={{mb: 2}}
+                    />
+                    <TextField
+                        type="text"
+                        variant='outlined'
+                        color='primary'
+                        label="Landmark"
+                        onChange={e => setLandmark(e.target.value)}
+                        value={landmark}
+                        fullWidth
+                        sx={{mb: 2}}
+                    />
+                    <TextField
+                        type="number"
+                        variant='outlined'
+                        color='primary'
+                        label="Zip Code"
+                        onChange={e => setZipcode(e.target.value)}
+                        value={zipcode}
+                        fullWidth
+                        required
+                        sx={{mb: 2}}
+                    />
+                    <Button variant="contained" color="primary" type="submit" fullWidth>SAVE ADDRESS</Button>
+                </form>
             </div>
           </Container>
         );

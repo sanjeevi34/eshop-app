@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import { Box, Typography, TextField, FormControl, Button } from "@mui/material";
+import { Box, Typography, TextField, FormControl, Button, Snackbar } from "@mui/material";
 import { Link } from "react-router-dom"
 import { pink } from '@mui/material/colors';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import MuiAlert from '@mui/material/Alert';
 
 import { useAuth } from '../../Contexts/AuthContext';
 
@@ -24,10 +25,16 @@ const LogIn = () => {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+
     const history = useHistory(); // Get the history object
 
     const navigateTo = (path) => {
-    history.push(path); // Use history.push to navigate to the specified path
+        history.push(path); // Use history.push to navigate to the specified path
+    };
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
     };
 
     async function login(email, password) {
@@ -77,15 +84,16 @@ const LogIn = () => {
                 /*-------------------*/
 
                 setSignedIn(true);
-                alert('Logged in successfully');
+                //alert('Logged in successfully');
                 navigateTo('/products');
             } else {
                 const error = new Error();
                 error.message = result.message || 'Something went wrong.';
             }
         } catch(e) {
-            alert(`Error: ${e.message}`);
-            alert('Email Address or Password is incorrect');
+            //alert(`Error: ${e.message}`);
+            //alert('Email Address or Password is incorrect');
+            setSnackbarOpen(true);
         }
     }
 
@@ -116,6 +124,11 @@ const LogIn = () => {
                 minHeight: '75vh', // Adjust height to fill the viewport
                 padding: '20px',
                 width: '400px', height: '300px', margin: 'auto' }}>
+            <Snackbar open={snackbarOpen} autoHideDuration={1500} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
+                      <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="error">
+                        Email Address or Password is incorrect
+                      </MuiAlert>
+            </Snackbar>
             <Box>
                 {/*<Box display="flex"      sx={{
                              borderRadius: '50%',

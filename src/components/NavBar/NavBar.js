@@ -82,7 +82,7 @@ const NavBar = (props) => {
 
     if (!props.loggedIn) {
         return (
-            <AppBar position="static">
+            <AppBar position="sticky" sx={{bgcolor: '#3f51b5'}}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -104,16 +104,16 @@ const NavBar = (props) => {
 
                     <Link
                       component="button"
-                      variant="h6"
-                      sx={{color: 'white', pr: 4}}
+                      variant="body1"
+                      sx={{color: 'white', pr: 4, textDecoration: 'underline',}}
                       onClick={() => navigateTo('/login')}
                     >
                       Login
                     </Link>
                     <Link
                       component="button"
-                      variant="h6"
-                      sx={{color: 'white', pr: 2}}
+                      variant="body1"
+                      sx={{color: 'white', pr: 2, textDecoration: 'underline',}}
                       onClick={() => navigateTo('/signup')}
                     >
                       Sign Up
@@ -124,7 +124,7 @@ const NavBar = (props) => {
     }
     if (props.loggedIn) {
        return (
-            <AppBar position="sticky">
+            <AppBar position="sticky" sx={{bgcolor: '#3f51b5'}}>
                 <Toolbar>
                     <IconButton
                         size="large"

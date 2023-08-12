@@ -13,10 +13,21 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom"
 import { useAuth } from '../../Contexts/AuthContext';
+import { useHistory } from 'react-router-dom'; // Import useHistory
 
 const ProductCard = ({ product }) => {
 
     const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
+
+    const history = useHistory(); // Get the history object
+
+    const navigateTo = (path) => {
+        history.push(path); // Use history.push to navigate to the specified path
+    };
+
+    const editIconHandle = () => {
+        navigateTo('/modifyProduct');
+    }
 
     return (
         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -31,11 +42,11 @@ const ProductCard = ({ product }) => {
                     <Typography variant="h6" component="div">
                         {product.name}
                     </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
+                    <Typography variant="h6">
                         {'₹' + product.price}
                     </Typography>
                 </Box>
-                <Typography variant="body2" color="textSecondary" sx={{ pt:1 }}>
+                <Typography variant="body2" color="textSecondary" sx={{ pt:1 }} align="left" container direction="column">
                     {product.description}
                 </Typography>
             </CardContent>
@@ -47,7 +58,7 @@ const ProductCard = ({ product }) => {
                 </Link>
                 { isAdmin &&
                     <Box sx={{ marginLeft: 'auto' }}>
-                        <IconButton aria-label="edit">
+                        <IconButton aria-label="edit" onClick={() => editIconHandle()}>
                             <EditIcon />
                         </IconButton>
                         <IconButton aria-label="delete">

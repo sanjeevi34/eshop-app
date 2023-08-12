@@ -44,7 +44,7 @@ const SignUp = () => {
 
             if(rawResponse.ok) {
                 window.location.href = './login';
-                alert('Form Submitted');
+                //alert('Form Submitted');
             } else {
                 const error = new Error();
                 error.message = result.message || 'Something went wrong.';
@@ -76,7 +76,7 @@ const SignUp = () => {
                     justifyContent: 'center', // Center vertically
                     minHeight: '75vh', // Adjust height to fill the viewport
                     padding: '20px',
-                    width: '400px', height: '300px', margin: 'auto' }}>
+                    width: '400px', margin: 'auto' }}>
                 <Box>
                     {/*<Box display="flex"      sx={{
                                  borderRadius: '50%',
@@ -106,7 +106,7 @@ const SignUp = () => {
                         value={firstName}
                         fullWidth
                         required
-                        sx={{mb: 4}}
+                        sx={{mb: 3}}
                     />
                     <TextField
                         type="text"
@@ -117,7 +117,7 @@ const SignUp = () => {
                         value={lastName}
                         fullWidth
                         required
-                        sx={{mb: 4}}
+                        sx={{mb: 3}}
                     />
                     <TextField
                         type="email"
@@ -128,7 +128,7 @@ const SignUp = () => {
                         value={email}
                         fullWidth
                         required
-                        sx={{mb: 4}}
+                        sx={{mb: 3}}
                     />
                     <TextField
                         type="password"
@@ -139,7 +139,7 @@ const SignUp = () => {
                         value={password}
                         required
                         fullWidth
-                        sx={{mb: 4}}
+                        sx={{mb: 3}}
                     />
                     <TextField
                         type="password"
@@ -150,7 +150,7 @@ const SignUp = () => {
                         value={confirmPassword}
                         required
                         fullWidth
-                        sx={{mb: 4}}
+                        sx={{mb: 3}}
                     />
                     <TextField
                         type="tel"
@@ -161,7 +161,7 @@ const SignUp = () => {
                         value={mobile}
                         required
                         fullWidth
-                        sx={{mb: 4}}
+                        sx={{mb: 3}}
                     />
                     <Button variant="contained" color="primary" type="submit" fullWidth>SIGN UP</Button>
                 </form>
