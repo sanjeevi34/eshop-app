@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 import NavBar from '../NavBar/NavBar.js';
 import { useAuth } from '../../Contexts/AuthContext';
-import { Box, Container, Divider, Paper, Grid, Typography, TextField, Button, NativeSelect } from '@mui/material';
+import { Box, Container, Divider, Paper, Grid, Typography, TextField, Button, NativeSelect, Snackbar } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 import {
   Stepper,
   Step,
@@ -32,6 +33,8 @@ const ProductDetails = () => {
     const [ product, setProduct] = useState(null);
     const [categories, setCategories] = useState(null);      // Category
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
     const [selectedAddress, setSelectedAddress] = useState('');
 //Add address
@@ -111,7 +114,8 @@ const ProductDetails = () => {
     //console.log(selectedAddress)
     if(activeStep == 1 && selectedAddress == 0)
     {
-        alert("Select an address");
+        setSnackbarOpen(true);
+        //alert("Select an address");
         return;
     }
     if(activeStep < 2)
@@ -122,6 +126,10 @@ const ProductDetails = () => {
     {
         //Do Place Order
     }
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   const handleBack = () => {
@@ -163,6 +171,11 @@ const ProductDetails = () => {
         return (
           /* Content for the "Select Address" step */
           <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <Snackbar open={snackbarOpen} autoHideDuration={1500} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
+                                <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="error">
+                                  Please select address!
+                                </MuiAlert>
+                      </Snackbar>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
               Select Address
             </InputLabel>
