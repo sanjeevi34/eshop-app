@@ -33,6 +33,7 @@ const ProductDetails = () => {
     const [categories, setCategories] = useState(null);      // Category
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
 
+    const [selectedAddress, setSelectedAddress] = useState('');
 //Add address
     const [name, setName] = useState();
     const [number, setNumber] = useState();
@@ -106,6 +107,13 @@ const ProductDetails = () => {
     },[activeStep]);
 
   const handleNext = () => {
+    //console.log(activeStep)
+    //console.log(selectedAddress)
+    if(activeStep == 1 && selectedAddress == 0)
+    {
+        alert("Select an address");
+        return;
+    }
     if(activeStep < 2)
     {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -118,7 +126,11 @@ const ProductDetails = () => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    console.log(activeStep);
+    //console.log(activeStep);
+  };
+
+  const handleOptionChange = (event) => {
+    setSelectedAddress(event.target.value);
   };
 
   const getStepContent = step => {
@@ -140,6 +152,7 @@ const ProductDetails = () => {
                         </Grid>
                     </Box>
                     <Typography variant="subtitle1" sx={{ pt: 2}}>Category: <b>{product.category}</b></Typography>
+                    <Typography variant="subtitle1" sx={{ pt: 2}}>Quantity: {quantity}</Typography>
                     <Typography variant="body1" sx={{ pt: 2}}>{product.description}</Typography>
                   </Grid>
                 </Grid>
@@ -154,11 +167,13 @@ const ProductDetails = () => {
               Select Address
             </InputLabel>
             <NativeSelect sx={{ width: '150%' }}
+              onChange={handleOptionChange}
               defaultValue={0}
               inputProps={{
                 name: 'age',
                 id: 'uncontrolled-native',
               }}
+              value={selectedAddress}
             >
               <option value={0}></option>
               <option value={10}>Ten</option>
