@@ -216,7 +216,9 @@ const AddProduct = () => {
                         fullWidth
                         sx={{mb: 4}}
                     />
-                    <Button variant="contained" color="primary" type="submit" fullWidth>SAVE PRODUCT</Button>
+                    <Button variant="contained" color="primary" type="submit" fullWidth sx={{bgcolor: '#3f51b5'}}>
+                        SAVE PRODUCT
+                    </Button>
                 </form>
             </div>
         </Box>

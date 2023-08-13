@@ -50,12 +50,40 @@ const Products = () => {
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
     const [sorting, setSorting]                   = useState('Default'); // Sorting
 
+    const [refetchData, setRefetchData] = useState(false);
+
     // Need to change this based on GET API
     //const categories = ['All', 'Electronics', 'Clothing', 'Accessories', 'Apparel']; // List of categories
 
     /*useEffect(() => {
         console.log(searchData);
     }, [searchData]);*/
+
+    async function getProductsFromBe () {
+        fetch('http://localhost:8080/api/products')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse the JSON response
+            })
+            .then(data => {
+                // Process the data returned from the API
+                setProducts(data);
+                //console.log(data[0]);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    useEffect(() => {
+        if(refetchData == true)
+        {
+            getProductsFromBe();
+        }
+        setRefetchData(false);
+    },[refetchData]);
 
     // This fetch executes only the first time.
     useEffect(() => {
@@ -155,7 +183,7 @@ const Products = () => {
                             {(filteredAndSortedProducts != null) ?
                                 filteredAndSortedProducts.map((product) => (
                                     <Grid item xs={12} sm={6} md={4} key={product.id}>
-                                        <ProductCard product={product} />
+                                        <ProductCard product={product} setRefetchData={setRefetchData}/>
                                     </Grid>
                                 )) : null}
                         </Grid>

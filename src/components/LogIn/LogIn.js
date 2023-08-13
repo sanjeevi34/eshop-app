@@ -75,7 +75,12 @@ const LogIn = () => {
                         return response.json();
                       })
                       .then(data => {
-                        //console.log(data);
+                        console.log(data);
+                        const output = (data.filter((value) => {
+                            return value.email === email
+                        }))
+                        window.sessionStorage.setItem('admin-id', output[0].id);
+
                         setIsAdmin(true);
                       })
                       .catch(error => {

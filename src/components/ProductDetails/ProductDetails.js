@@ -37,6 +37,8 @@ const ProductDetails = () => {
     const [landmark, setLandmark] = useState();
     const [zipcode, setZipcode] = useState();
 
+    const [option, setOptions] = useState([{ value: 0, label: '' }]);
+
     // To Navigate the pages.
     const history = useHistory(); // Get the history object
     const navigateTo = (path) => {
@@ -46,6 +48,35 @@ const ProductDetails = () => {
     const handleSelectCategory = (event, newCategory) => {
         setSelectedCategory(newCategory);
     };
+
+    async function getAllAddress()  {
+        //GET API addresses
+        const apiUrl4 = "http://localhost:8080/api/addresses";
+        const headers = new Headers();
+        const accessToken   = window.sessionStorage.getItem('access-token');
+        headers.append('Authorization', `Bearer ${accessToken}`);
+
+        fetch(apiUrl4, { method: 'GET', headers })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            //console.log(data);
+            const newObj = data.map((data) => ({
+                value: data.id,
+                label: data.name + '--> ' + data.street + ", " + data.city,
+            }));
+            setOptions(newObj);
+            //console.log(newObj);
+          })
+          .catch(error => {
+            console.error("Not admin");
+          });
+    }
+
 
     // This fetch executes only the first time.
     useEffect(() => {
@@ -83,6 +114,8 @@ const ProductDetails = () => {
             .catch(error => {
                 console.error('Error:', error);
             });
+
+            getAllAddress();
     }, []);
 
 /*----<Stepper Menu>-----*/
@@ -130,15 +163,70 @@ const ProductDetails = () => {
 
   const handleOptionChange = (event) => {
     setSelectedAddress(event.target.value);
+    console.log(event.target.value);
   };
 
-    const handleSaveAddress = () => {
-        //Save Address API @todo
+    async function addAddressToBe() {
+        const addAddressUrl = 'http://localhost:8080/api/addresses';
+        const accessToken   = window.sessionStorage.getItem('access-token');
+        const adminId   = window.sessionStorage.getItem('admin-id');
+        const headers = {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Accept': "application/json",
+                            'Content-Type': "application/json",
+        }
+
+        const requestBody = {
+          id: '552145',  //Create random number here @todo
+          name: name,
+          contactNumber: number,
+          city: city,
+          landmark: landmark,
+          street: street,
+          state: state,
+          zipcode: zipcode,
+          user: adminId
+        };
+        console.log(requestBody);
+        fetch(addAddressUrl, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(requestBody)
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response;
+          })
+          .then(data => {
+            console.log(data);
+            setName(null);
+            setNumber(null);
+            setStreet(null);
+            setCity(null);
+            setState(null);
+            setLandmark(null);
+            setZipcode(null);
+          })
+          .catch(error => {
+            console.error('Not able to add the address', error);
+          });
+    }
+
+    const handleSaveAddress = (event) => {
+        event.preventDefault();
+        try {
+            addAddressToBe();
+
+        } catch(e) {
+            alert(`Error: ${e.message}`);
+        }
     }
 
   const getStepContent = step => {
     switch (step) {
-      case 0:
+      case 0: //Product Details
         return (
         <Box>
             <Box sx={{pb:1}}/>
@@ -162,7 +250,7 @@ const ProductDetails = () => {
             </Container>
         </Box>
       );
-      case 1:
+      case 1:  // Select and Add Address
         return (
           /* Content for the "Select Address" step */
           <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -183,10 +271,12 @@ const ProductDetails = () => {
               }}
               value={selectedAddress}
             >
-              <option value={0}></option>
-              <option value={10}>Ten</option>
-              <option value={20}>Twenty</option>
-              <option value={30}>Thirty</option>
+                <option key={0} value=""></option>
+                {option.map((option, index) => (
+                  <option key={index} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
             </NativeSelect>
             <div
                 style={{

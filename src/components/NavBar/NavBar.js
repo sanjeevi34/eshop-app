@@ -102,6 +102,10 @@ const NavBar = (props) => {
         navigateTo('/');
     };
 
+    const testing = () => { //Need to delete this @todo
+        navigateTo('/testing');
+    };
+
     const homeClicked = () => {
         navigateTo('/products');
     };
@@ -232,6 +236,9 @@ const NavBar = (props) => {
                             <Button variant="contained" color="error" onClick={() => loggingOut()}>
                                 LOGOUT
                             </Button>
+                            {/*<Button variant="contained" color="error" onClick={() => testing()}>
+                                TESTING
+                            </Button>*/}
 
                         </Grid>
                     </Grid>

@@ -7,7 +7,9 @@ import {
   Button,
   TextField,
   Typography,
+  Snackbar,
 } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 
 import { useParams } from 'react-router-dom'; // Import useParams
 import { useAuth } from '../../Contexts/AuthContext';
@@ -19,6 +21,8 @@ const ModifyProduct = () => {
 
     const { productName } = useParams();
 
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+
     const [name, setName]                     = useState(null);
     const [category, setCategory]             = useState(null);
     const [manufacturer, setManufacturer]     = useState(null);
@@ -26,6 +30,10 @@ const ModifyProduct = () => {
     const [price, setPrice]                   = useState(null);
     const [imageUrl, setImageUrl]             = useState(null);
     const [description, setDescription]       = useState(null);
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
 
     // This fetch executes only the first time.
     useEffect(() => {
@@ -54,15 +62,55 @@ const ModifyProduct = () => {
             });
     }, []);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-    }
-
     const history = useHistory(); // Get the history object
 
     const navigateTo = (path) => {
     history.push(path); // Use history.push to navigate to the specified path
     };
+
+    async function modifyProductInBd (id) {
+        console.log(id);
+          const accessToken = window.sessionStorage.getItem('access-token');
+          const apiUrl4 = "http://localhost:8080/api/products/" + id;
+          const headers = {
+                "Accept": "*/*",
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${accessToken}`
+          }
+          const params = {
+            id: id,
+            name: name,
+            category: category,
+            price: Number(price),
+            description: description,
+            manufacturer: manufacturer,
+            availableItems: availableItems,
+            imageUrl: imageUrl
+          }
+            fetch(apiUrl4, { method: 'PUT', body: JSON.stringify(params), headers })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                  }
+                  return response;
+                })
+                .then(data => {
+                  console.log(data);
+                  //After modify success what to do @todo
+                  setSnackbarOpen(true);
+                  setTimeout( () => {
+                    navigateTo('/products')
+                  },2000);
+                })
+                .catch(error => {
+                  console.error("Error: " + error);
+                });
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        modifyProductInBd(productName);
+    }
 
     if(signedIn == false)  // Should always be false @todo
     {
@@ -73,7 +121,11 @@ const ModifyProduct = () => {
         return(
             <Box>
                 <NavBar loggedIn={signedIn} isAdmin={isAdmin}/>
-
+                <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
+                          <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
+                            Product {name} modified successfully
+                          </MuiAlert>
+                </Snackbar>
                 <div
                     style={{
                         display: 'flex',
