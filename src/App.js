@@ -38,7 +38,7 @@ function App() {
                     <Route path="/product/:productName" component={ProductDetailsWithoutStepper}/>
                     <Route path="/testing" component={Testing}/>
                     <Route path="/addProduct" component={AddProduct}/>
-                    <Route path="/modifyProduct" component={ModifyProduct}/>
+                    <Route path="/modifyProduct/:productName" component={ModifyProduct}/>
                 </Switch>
             </Router>
         </AuthProvider>

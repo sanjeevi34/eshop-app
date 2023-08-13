@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
     };
 
     const editIconHandle = () => {
-        navigateTo('/modifyProduct');
+        navigateTo('/modifyProduct/' + product.id);
     }
 
     return (

@@ -9,12 +9,15 @@ import {
   Typography,
 } from '@mui/material';
 
+import { useParams } from 'react-router-dom'; // Import useParams
 import { useAuth } from '../../Contexts/AuthContext';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
 const ModifyProduct = () => {
 
     const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
+
+    const { productName } = useParams();
 
     const [name, setName]                     = useState(null);
     const [category, setCategory]             = useState(null);
@@ -24,6 +27,32 @@ const ModifyProduct = () => {
     const [imageUrl, setImageUrl]             = useState(null);
     const [description, setDescription]       = useState(null);
 
+    // This fetch executes only the first time.
+    useEffect(() => {
+        // Make a GET request to fetch the requested product details
+        //console.log(productName);
+        fetch('http://localhost:8080/api/products/' + productName)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse the JSON response
+            })
+            .then(data => {
+                // Process the data returned from the API
+                //console.log(data);
+                setName(data.name);
+                setCategory(data.category);
+                setManufacturer(data.manufacturer);
+                setAvailableItems(data.availableItems);
+                setPrice(data.price);
+                setImageUrl(data.imageUrl);
+                setDescription(data.description);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }, []);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -75,6 +104,7 @@ const ModifyProduct = () => {
                             fullWidth
                             required
                             sx={{mb: 3}}
+                            InputLabelProps={{shrink:true}}
                         />
                         <TextField
                             type="text"
@@ -86,6 +116,7 @@ const ModifyProduct = () => {
                             fullWidth
                             required
                             sx={{mb: 3}}
+                            InputLabelProps={{shrink:true}}
                         />
                         <TextField
                             type="text"
@@ -97,6 +128,7 @@ const ModifyProduct = () => {
                             fullWidth
                             required
                             sx={{mb: 3}}
+                            InputLabelProps={{shrink:true}}
                         />
                         <TextField
                             type="number"
@@ -108,6 +140,7 @@ const ModifyProduct = () => {
                             fullWidth
                             required
                             sx={{mb: 3}}
+                            InputLabelProps={{shrink:true}}
                         />
                         <TextField
                             type="number"
@@ -119,6 +152,7 @@ const ModifyProduct = () => {
                             required
                             fullWidth
                             sx={{mb: 3}}
+                            InputLabelProps={{shrink:true}}
                         />
                         <TextField
                             type="text"
@@ -129,6 +163,7 @@ const ModifyProduct = () => {
                             value={imageUrl}
                             fullWidth
                             sx={{mb: 3}}
+                            InputLabelProps={{shrink:true}}
                         />
                         <TextField
                             type="text"
@@ -139,8 +174,11 @@ const ModifyProduct = () => {
                             value={description}
                             fullWidth
                             sx={{mb: 3}}
+                            InputLabelProps={{shrink:true}}
                         />
-                        <Button variant="contained" color="primary" type="submit" fullWidth>MODIFY PRODUCT</Button>
+                        <Button variant="contained" color="primary" type="submit" fullWidth sx={{bgcolor: '#3f51b5'}}>
+                            MODIFY PRODUCT
+                        </Button>
                     </form>
                 </div>
             </Box>
