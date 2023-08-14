@@ -99,6 +99,7 @@ const NavBar = (props) => {
         setSignedIn(false);
         setIsAdmin(false);
         window.sessionStorage.removeItem('access-token');
+        window.sessionStorage.removeItem('admin-id');
         navigateTo('/');
     };
 

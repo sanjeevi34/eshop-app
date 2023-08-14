@@ -178,6 +178,8 @@ const ProductDetails = () => {
     else
     {
         //Do Place Order
+        console.log("PLACE ORDER")
+
     }
   };
 
