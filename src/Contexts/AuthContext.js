@@ -10,6 +10,7 @@ export function AuthProvider(props){
     const [authUser, setAuthUser] = useState(null);
     const [signedIn, setSignedIn] = useState(false);
     const [isAdmin,  setIsAdmin]  = useState(false);
+    const [orderPlaced, setOrderPlaced] = useState(false);
 
     const authContextValue = {
         authUser,
@@ -17,7 +18,9 @@ export function AuthProvider(props){
         signedIn,
         setSignedIn,
         isAdmin,
-        setIsAdmin
+        setIsAdmin,
+        orderPlaced,
+        setOrderPlaced,
     };
 
     return(

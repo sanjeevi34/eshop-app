@@ -20,7 +20,9 @@ const steps = ['Items', 'Select Address', 'Confirm Order'];
 
 const ProductDetails = () => {
     const { productName,  quantity} = useParams();
-    const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
+
+    const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin, orderPlaced,  setOrderPlaced} = useAuth();
+
     const [ product, setProduct] = useState(null);
     const [categories, setCategories] = useState(null);      // Category
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
@@ -147,6 +149,48 @@ const ProductDetails = () => {
             getAllAddress();
     }, []);
 
+//
+async function placeOrderTobe () {
+        const addAddressUrl = 'http://localhost:8080/api/orders';
+        const accessToken   = window.sessionStorage.getItem('access-token');
+        const adminId   = window.sessionStorage.getItem('admin-id');
+        const headers = {
+                            'Authorization': `Bearer ${accessToken}`,
+                            'Accept': "application/json",
+                            'Content-Type': "application/json",
+        }
+
+        const requestBody = {
+          id: '12457859',  //Create random number here @todo
+          quantity: quantity,
+          user: adminId,
+          product: productName,
+          address: selectedAddress,
+        };
+        console.log(requestBody);
+        fetch(addAddressUrl, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(requestBody)
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response;
+          })
+          .then(data => {
+            console.log("PLACE ORDER")
+            console.log(data);
+            setOrderPlaced(true);
+            navigateTo('/products');
+            //Snack bar for confirm order @todo
+          })
+          .catch(error => {
+            console.error('Not able to order', error);
+          });
+}
+
 /*----<Stepper Menu>-----*/
     const [activeStep, setActiveStep] = useState(0);
     const [nextButton, setNextButton] = useState("NEXT");
@@ -178,8 +222,7 @@ const ProductDetails = () => {
     else
     {
         //Do Place Order
-        console.log("PLACE ORDER")
-
+        placeOrderTobe();
     }
   };
 

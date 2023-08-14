@@ -1,7 +1,10 @@
 import NavBar from '../NavBar/NavBar.js';
 import React, { useState, useEffect } from 'react';
+
 import { useAuth } from '../../Contexts/AuthContext';
-import { Typography, Container, Grid, Select, MenuItem, Box } from '@mui/material';
+
+import { Typography, Container, Grid, Select, MenuItem, Box, Snackbar } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 import ProductCategories from '../ProductCategories/ProductCategories.js';
 import ProductCard from '../ProductCard/ProductCard.js';
 import { useHistory } from 'react-router-dom'; // Import useHistory
@@ -35,7 +38,7 @@ import { useHistory } from 'react-router-dom'; // Import useHistory
 
 const Products = () => {
     // AuthContext to store login details as global state.
-    const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
+    const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin, orderPlaced,  setOrderPlaced} = useAuth();
 
     // To Navigate the pages.
     const history = useHistory(); // Get the history object
@@ -50,6 +53,12 @@ const Products = () => {
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
     const [sorting, setSorting]                   = useState('Default'); // Sorting
 
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+
     const [refetchData, setRefetchData] = useState(false);
 
     // Need to change this based on GET API
@@ -58,6 +67,15 @@ const Products = () => {
     /*useEffect(() => {
         console.log(searchData);
     }, [searchData]);*/
+
+    // Display snack bar when order is placed
+    useEffect( () => {
+        if(orderPlaced == true)
+        {
+            setSnackbarOpen(true);
+            setOrderPlaced(false);
+        }
+    },[]);
 
     async function getProductsFromBe () {
         fetch('http://localhost:8080/api/products')
@@ -161,6 +179,11 @@ const Products = () => {
         return (
             <Box>
                 <NavBar loggedIn={true} searchEnable={true} isAdmin={isAdmin} searchDataCallBack={setSearchData}/>
+                <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
+                          <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
+                            Order placed successfully!
+                          </MuiAlert>
+                </Snackbar>
                 <Container>
                     <Box sx={{ pb:2 }}>
                     </Box>
