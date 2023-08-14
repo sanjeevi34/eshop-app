@@ -27,6 +27,8 @@ const ProductDetails = () => {
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+    const [snackbarOpenAddr, setSnackbarOpenAddr] = useState(false);
+
     const [selectedAddress, setSelectedAddress] = useState('');
 //Add address
     const [name, setName] = useState();
@@ -38,6 +40,10 @@ const ProductDetails = () => {
     const [zipcode, setZipcode] = useState();
 
     const [option, setOptions] = useState([{ value: 0, label: '' }]);
+
+    const [allAddress, setAllAddress] = useState();
+
+    const [displayAddress, setDisplayAddress] = useState();
 
     // To Navigate the pages.
     const history = useHistory(); // Get the history object
@@ -71,12 +77,35 @@ const ProductDetails = () => {
             }));
             setOptions(newObj);
             //console.log(newObj);
+            setAllAddress(data);
           })
           .catch(error => {
             console.error("Not admin");
           });
     }
 
+    useEffect( () => {
+        if(Array.isArray(allAddress))
+        {
+            allAddress.forEach( (v) => {
+                //console.log(v.id);
+                //console.log(selectedAddress);
+                if(v.id == selectedAddress) {
+                    //console.log(v);
+                    const addr = {
+                        name: v.name,
+                        number: v.contactNumber,
+                        street: v.street,
+                        city: v.city,
+                        state: v.state,
+                        zipcode: v.zipcode
+                    }
+                    console.log(addr);
+                    setDisplayAddress(addr);
+                }
+            });
+        }
+    },[allAddress, selectedAddress]);
 
     // This fetch executes only the first time.
     useEffect(() => {
@@ -156,6 +185,10 @@ const ProductDetails = () => {
     setSnackbarOpen(false);
   };
 
+    const handleSnackbarCloseAddr = () => {
+      setSnackbarOpenAddr(false);
+    };
+
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     //console.log(activeStep);
@@ -208,6 +241,8 @@ const ProductDetails = () => {
             setState(null);
             setLandmark(null);
             setZipcode(null);
+            setSnackbarOpenAddr(true);
+            getAllAddress();
           })
           .catch(error => {
             console.error('Not able to add the address', error);
@@ -257,6 +292,11 @@ const ProductDetails = () => {
                       <Snackbar open={snackbarOpen} autoHideDuration={1500} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
                                 <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="error">
                                   Please select address!
+                                </MuiAlert>
+                      </Snackbar>
+                      <Snackbar open={snackbarOpenAddr} autoHideDuration={1500} onClose={handleSnackbarCloseAddr} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
+                                <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarCloseAddr} severity="success">
+                                  Address added successfully!
                                 </MuiAlert>
                       </Snackbar>
             <InputLabel variant="standard" htmlFor="uncontrolled-native">
@@ -391,11 +431,11 @@ const ProductDetails = () => {
           {/* Right Side (User Address) */}
           <Grid xs={4} container direction="column" align="left" sx={{pt: 3}}>
             <Typography variant="h4" sx={{mb: 1}}>Address Details :</Typography>
-            <Typography>{name}</Typography>
-            <Typography>Contact Number: {number}</Typography>
-            <Typography>{street + ", " + city}</Typography>
-            <Typography>{state}</Typography>
-            <Typography>{zipcode}</Typography>
+            <Typography>{displayAddress.name}</Typography>
+            <Typography>Contact Number: {displayAddress.number}</Typography>
+            <Typography>{displayAddress.street + ", " + displayAddress.city}</Typography>
+            <Typography>{displayAddress.state}</Typography>
+            <Typography>{displayAddress.zipcode}</Typography>
           </Grid>
         </Grid>
       </Paper>
