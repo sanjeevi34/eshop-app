@@ -9,7 +9,8 @@ import {
   Button,
   IconButton,
   Box,
-  TextField
+  TextField,
+  Snackbar,
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import CreatableSelect from 'react-select/creatable';
@@ -30,6 +31,11 @@ const AddProduct = () => {
     const [description, setDescription] = useState(null);
     const [category, setCategory] = useState(null);
     const [options, setOptions]   = useState({ label: 'Option 1', value: 'option1' });
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
 
     const handleOptionChange = (newValue, actionMeta) => {
         setCategory(newValue);
@@ -88,7 +94,8 @@ const AddProduct = () => {
 
             //const result = await rawResponse.json();
             if(rawResponse.ok) {
-                alert('Product Added');
+                //alert('Product Added');
+                setSnackbarOpen(true);
 
             } else {
                 const error = new Error();
@@ -120,7 +127,11 @@ const AddProduct = () => {
         return (
         <Box>
             <NavBar loggedIn={signedIn} isAdmin={isAdmin}/>
-
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
+                      <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
+                        Product {name} added successfully
+                      </MuiAlert>
+            </Snackbar>
             <div
                 style={{
                     display: 'flex',
@@ -128,14 +139,13 @@ const AddProduct = () => {
                     justifyContent: 'center', // Center vertically
                     minHeight: '75vh', // Adjust height to fill the viewport
                     padding: '20px',
-                    paddingTop: '40px',
-                    width: '400px', height: '300px', margin: 'auto' }}>
+                    width: '400px', margin: 'auto' }}>
                 <Box>
                     <Typography
                         variant="h5"
                         component="div"
                         align="center"
-                        sx={{ flexGrow: 1, pb: 4}}
+                        sx={{ flexGrow: 1, pb: 2}}
                     >
                         Add Product
                     </Typography>
@@ -150,9 +160,9 @@ const AddProduct = () => {
                         value={name}
                         fullWidth
                         required
-                        sx={{mb: 4}}
+                        sx={{mb: 2}}
                     />
-                    <Box sx={{mb: 4}} >
+                    <Box sx={{mb: 2}} >
                         <CreatableSelect
                             value={category}
                             onChange={handleOptionChange}
@@ -171,7 +181,7 @@ const AddProduct = () => {
                         value={manufacturer}
                         fullWidth
                         required
-                        sx={{mb: 4}}
+                        sx={{mb: 2}}
                     />
                     <TextField
                         type="number"
@@ -182,7 +192,7 @@ const AddProduct = () => {
                         value={availableItems}
                         fullWidth
                         required
-                        sx={{mb: 4}}
+                        sx={{mb: 2}}
                     />
                     <TextField
                         type="number"
@@ -193,7 +203,7 @@ const AddProduct = () => {
                         value={price}
                         required
                         fullWidth
-                        sx={{mb: 4}}
+                        sx={{mb: 2}}
                     />
                     <TextField
                         type="text"
@@ -204,7 +214,7 @@ const AddProduct = () => {
                         value={imageUrl}
                         required
                         fullWidth
-                        sx={{mb: 4}}
+                        sx={{mb: 2}}
                     />
                     <TextField
                         type="text"
@@ -214,7 +224,7 @@ const AddProduct = () => {
                         onChange={e => setDescription(e.target.value)}
                         value={description}
                         fullWidth
-                        sx={{mb: 4}}
+                        sx={{mb: 2}}
                     />
                     <Button variant="contained" color="primary" type="submit" fullWidth sx={{bgcolor: '#3f51b5'}}>
                         SAVE PRODUCT
