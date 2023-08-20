@@ -1,3 +1,4 @@
+// Importing required components
 import NavBar from '../NavBar/NavBar.js'; //Don't change this position
 
 import { useState, useEffect } from "react";
@@ -10,19 +11,19 @@ import {
   Snackbar,
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-
 import { useParams } from 'react-router-dom'; // Import useParams
 import { useAuth } from '../../Contexts/AuthContext';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
 const ModifyProduct = () => {
 
+    // Use AuthContext
     const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
 
     const { productName } = useParams();
 
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-
+    // Local states
+    // Product details
     const [name, setName]                     = useState(null);
     const [category, setCategory]             = useState(null);
     const [manufacturer, setManufacturer]     = useState(null);
@@ -30,7 +31,8 @@ const ModifyProduct = () => {
     const [price, setPrice]                   = useState(null);
     const [imageUrl, setImageUrl]             = useState(null);
     const [description, setDescription]       = useState(null);
-
+    // Snackbar
+    const [snackbarOpen, setSnackbarOpen]     = useState(false);
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
     };
@@ -62,22 +64,25 @@ const ModifyProduct = () => {
             });
     }, []);
 
-    const history = useHistory(); // Get the history object
-
+    // Support functions to navigate to other pages of the website.
+    const history    = useHistory(); // Get the history object
     const navigateTo = (path) => {
     history.push(path); // Use history.push to navigate to the specified path
     };
 
+    // Async function to modify the product in the backend using PUT API
     async function modifyProductInBd (id) {
         console.log(id);
-          const accessToken = window.sessionStorage.getItem('access-token');
-          const apiUrl4 = "http://localhost:8080/api/products/" + id;
-          const headers = {
-                "Accept": "*/*",
-                "Content-Type": "application/json",
-                'Authorization': `Bearer ${accessToken}`
-          }
-          const params = {
+        const accessToken = window.sessionStorage.getItem('access-token');
+        const apiUrl4 = "http://localhost:8080/api/products/" + id;
+        const headers = {
+            "Accept": "*/*",
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${accessToken}`
+        }
+
+        // params is the request payload for the API
+        const params = {
             id: id,
             name: name,
             category: category,
@@ -86,25 +91,24 @@ const ModifyProduct = () => {
             manufacturer: manufacturer,
             availableItems: availableItems,
             imageUrl: imageUrl
-          }
-            fetch(apiUrl4, { method: 'PUT', body: JSON.stringify(params), headers })
-                .then(response => {
-                  if (!response.ok) {
+        }
+        fetch(apiUrl4, { method: 'PUT', body: JSON.stringify(params), headers })
+            .then(response => {
+                if (!response.ok) {
                     throw new Error('Network response was not ok');
-                  }
-                  return response;
-                })
-                .then(data => {
-                  console.log(data);
-                  //After modify success what to do @todo
-                  setSnackbarOpen(true);
-                  setTimeout( () => {
+                }
+                return response;
+            })
+            .then(data => {
+                // console.log(data);
+                setSnackbarOpen(true);
+                setTimeout( () => {
                     navigateTo('/products')
-                  },2000);
-                })
-                .catch(error => {
-                  console.error("Error: " + error);
-                });
+                },2000);
+            })
+            .catch(error => {
+                console.error("Error: " + error);
+            });
     }
 
     const handleSubmit = (event) => {
@@ -112,8 +116,10 @@ const ModifyProduct = () => {
         modifyProductInBd(productName);
     }
 
-    if(signedIn == false)  // Should always be false @todo
+    // Rendering based on whether the user logged in or not
+    if(signedIn == false)
     {
+        // If user didn't login, then redirect to login page.
         navigateTo('/login');
     }
     else

@@ -4,42 +4,51 @@ import { Link } from "react-router-dom"
 import { pink } from '@mui/material/colors';
 import MuiAlert from '@mui/material/Alert';
 import LockIcon from "@mui/icons-material/Lock";
+
 import { useAuth } from '../../Contexts/AuthContext';
 
+// Importing other components
 import NavBar from '../NavBar/NavBar.js'; //Don't change this position
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
+// Import stylesheets for Login page
 import "./Login.css";
 
+// Login component
 const LogIn = () => {
-    const {         authUser,
-                    setAuthUser,
-                    signedIn,
-                    setSignedIn,
-                    isAdmin,
-                    setIsAdmin} = useAuth();
 
+    // AuthContext
+    const { authUser,
+            setAuthUser,
+            signedIn,
+            setSignedIn,
+            isAdmin,
+            setIsAdmin} = useAuth();
+
+    // Local States
+    // Login details and support states
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-
+    // Snackbar
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const handleSnackbarClose             = () => {
+                                                setSnackbarOpen(false);
+                                            };
 
+    // Support for navigation to other webpages.
     const history = useHistory(); // Get the history object
 
     const navigateTo = (path) => {
         history.push(path); // Use history.push to navigate to the specified path
     };
 
-    const handleSnackbarClose = () => {
-        setSnackbarOpen(false);
-    };
-
+    // Async function to call login POST API to the backend
     async function login(email, password) {
-        //const param = window.btoa(`${email}:${password}`);
+        // params is the request payload for the POST API call
         const params = {
             username: email,
             password: password
@@ -56,25 +65,22 @@ const LogIn = () => {
 
             const result = await rawResponse.json();
             if(rawResponse.ok) {
-                //window.sessionStorage.setItem('user-details', JSON.stringify(result));
-                //console.log(result.token);
                 window.sessionStorage.setItem('access-token', result.token);
-                //window.location.href = './boards.html';
 
                 /*Check whether it is the admin who logged in*/
-                    const accessToken = result.token;
-                    const apiUrl4 = "http://localhost:8080/api/users";
-                    const headers = new Headers();
-                    headers.append('Authorization', `Bearer ${accessToken}`);
+                const accessToken = result.token;
+                const apiUrl4 = "http://localhost:8080/api/users";
+                const headers = new Headers();
+                headers.append('Authorization', `Bearer ${accessToken}`);
 
-                    fetch(apiUrl4, { method: 'GET', headers })
-                      .then(response => {
+                fetch(apiUrl4, { method: 'GET', headers })
+                    .then(response => {
                         if (!response.ok) {
-                          throw new Error('Network response was not ok');
+                            throw new Error('Network response was not ok');
                         }
                         return response.json();
-                      })
-                      .then(data => {
+                  })
+                    .then(data => {
                         console.log(data);
                         const output = (data.filter((value) => {
                             return value.email === email
@@ -82,10 +88,10 @@ const LogIn = () => {
                         window.sessionStorage.setItem('admin-id', output[0].id);
 
                         setIsAdmin(true);
-                      })
+                    })
                       .catch(error => {
-                        //console.error("Not admin");
-                        setIsAdmin(false);
+                            //console.error("Not admin");
+                            setIsAdmin(false);
                       });
                 /*-------------------*/
 
@@ -93,7 +99,7 @@ const LogIn = () => {
                 //alert('Logged in successfully');
                 navigateTo('/products');
             } else {
-                const error = new Error();
+                const error   = new Error();
                 error.message = result.message || 'Something went wrong.';
             }
         } catch(e) {
@@ -103,6 +109,7 @@ const LogIn = () => {
         }
     }
 
+    // Function to handle the submit of the login form
     const handleSubmit = (event) => {
         event.preventDefault();
         setEmailError(false);

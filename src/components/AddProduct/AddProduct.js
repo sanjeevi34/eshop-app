@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import React from 'react';
 import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  CardActions,
-  Button,
-  IconButton,
-  Box,
-  TextField,
-  Snackbar,
+    Card,
+    CardMedia,
+    CardContent,
+    Typography,
+    CardActions,
+    Button,
+    IconButton,
+    Box,
+    TextField,
+    Snackbar,
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import CreatableSelect from 'react-select/creatable';
@@ -18,30 +18,35 @@ import { Link } from "react-router-dom"
 import { useAuth } from '../../Contexts/AuthContext';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
+// Importing components
 import NavBar from '../NavBar/NavBar.js'; //Don't change this position
 
 const AddProduct = () => {
 
+    // Use AuthContext
     const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
-    const [name, setName] = useState(null);
-    const [manufacturer, setManufacturer] = useState(null);
+
+    // Local states
+    // Product details
+    const [name, setName]                     = useState(null);
+    const [manufacturer, setManufacturer]     = useState(null);
     const [availableItems, setAvailableItems] = useState(null);
-    const [price, setPrice] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [category, setCategory] = useState(null);
+    const [price, setPrice]                   = useState(null);
+    const [imageUrl, setImageUrl]             = useState(null);
+    const [description, setDescription]       = useState(null);
+    const [category, setCategory]             = useState(null);
+    // Options
     const [options, setOptions]   = useState({ label: 'Option 1', value: 'option1' });
-
+    const handleOptionChange      = (newValue, actionMeta) => {
+                                        setCategory(newValue);
+                                    };
+    // Snackbar
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const handleSnackbarClose = () => {
-        setSnackbarOpen(false);
-    };
+    const handleSnackbarClose             = () => {
+                                                setSnackbarOpen(false);
+                                            };
 
-    const handleOptionChange = (newValue, actionMeta) => {
-        setCategory(newValue);
-    };
-
-    // Used to populate the options with the product categories
+    // Used to populate the options with the product categories during intial load
     useEffect( () => {
         // Make a GET request to fetch all the product categories
         fetch('http://localhost:8080/api/products/categories')
@@ -63,17 +68,11 @@ const AddProduct = () => {
             });
     },[]);
 
-    useEffect( () => {
-        if(category != null)
-        {
-        console.log(category.value); //This should be sent to the API @todo
-        }
-    },[category]);
-
+    // Async function to add the product to the backend using POST API call
     async function addProductToBackend(name, category, manufacturer, availableItems, price, imageUrl, description) {
-        //const param = window.btoa(`${email}:${password}`);
+         // params is the request payload for the POST API call
         const params = {
-            id: 12547, //Create a random number
+            id: 12547,
             name: name,
             category: category,
             price: price,
@@ -83,12 +82,14 @@ const AddProduct = () => {
             imageUrl: imageUrl
         }
         try {
+            const accessToken = window.sessionStorage.getItem('access-token');
             const rawResponse = await fetch('http://localhost:8080/api/products', {
                 method: 'POST',
                 body: JSON.stringify(params),
                 headers: {
                 "Accept": "*/*",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${accessToken}`
                 }
             });
 
@@ -107,19 +108,22 @@ const AddProduct = () => {
         }
     }
 
+    // Handle submission of the add product form
     const handleSubmit = (event) => {
           event.preventDefault();
           addProductToBackend(name, category.value, manufacturer, availableItems, price, imageUrl, description);
     }
 
-    const history = useHistory(); // Get the history object
-
+    // Support functions to navigate to other pages of the website.
+    const history    = useHistory(); // Get the history object
     const navigateTo = (path) => {
-    history.push(path); // Use history.push to navigate to the specified path
+        history.push(path); // Use history.push to navigate to the specified path
     };
 
+    // Rendering content of the component based on whether the user logged in or not
     if(!signedIn)
     {
+        // If the user is not logged in, then it redirects to the login page
         navigateTo('/login');
     }
     else

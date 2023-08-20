@@ -9,33 +9,6 @@ import ProductCategories from '../ProductCategories/ProductCategories.js';
 import ProductCard from '../ProductCard/ProductCard.js';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
-/*const products1 = [
-    {
-        id: 1,
-        name: 'OnePlus8T',
-        price: 50000,
-        category: 'Electronics',
-        imageUrl: 'https://oasis.opstatics.com/content/dam/oasis/default/product-specs/8t-green.png', // Replace with actual image URL
-        description: 'OnePlus phones are premium Android smartphones known for their powerful performance.',
-    },
-    {
-        id: 2,
-        name: 'boAt Airdopes Alpha True Wireless Earbuds',
-        price: 5500,
-        category: 'Electronics',
-        imageUrl: 'https://www.takemetechnically.com/wp-content/uploads/2023/07/boat-airdopes-alpha-64a304b5a1680.webp', // Replace with actual image URL
-        description: 'boAt Airdopes Alpha True Wireless Earbuds',
-    },
-    {
-        id: 3,
-        name: 'NIKE Revolution Running Shoe',
-        price: 13500,
-        category: 'Apparel',
-        imageUrl: 'https://assets.ajio.com/medias/sys_master/root/20211224/1tuJ/61c4c229aeb26901101a2a6a/-473Wx593H-469034008-black-MODEL.jpg', // Replace with actual image URL
-        description: 'NIKE Revolution 6 NN Running Shoes For Men (Black, 10)',
-    }
-];*/
-
 const Products = () => {
     // AuthContext to store login details as global state.
     const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin, orderPlaced,  setOrderPlaced} = useAuth();
@@ -53,20 +26,14 @@ const Products = () => {
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
     const [sorting, setSorting]                   = useState('Default'); // Sorting
 
+    // Snack bar
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
     };
 
+    // State to refetch the data.
     const [refetchData, setRefetchData] = useState(false);
-
-    // Need to change this based on GET API
-    //const categories = ['All', 'Electronics', 'Clothing', 'Accessories', 'Apparel']; // List of categories
-
-    /*useEffect(() => {
-        console.log(searchData);
-    }, [searchData]);*/
 
     // Display snack bar when order is placed
     useEffect( () => {
@@ -77,6 +44,7 @@ const Products = () => {
         }
     },[]);
 
+    // Async function to get products through GET API Call
     async function getProductsFromBe () {
         fetch('http://localhost:8080/api/products')
             .then(response => {
