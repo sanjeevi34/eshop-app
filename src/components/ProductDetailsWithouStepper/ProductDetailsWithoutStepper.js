@@ -20,22 +20,23 @@ import ProductCategories from '../ProductCategories/ProductCategories.js';
 const ProductDetailsWithoutStepper = () => {
     const { productName } = useParams();
 
+    // Use AuthContext
     const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin } = useAuth();
 
+    // Local states
     const [ quantity, setQuantity ]               = useState("");
     const [quantityError, setQuantityError]       = useState(false);
     const [ product, setProduct]                  = useState(null);
     const [categories, setCategories]             = useState(null);      // Category
     const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
-
     //Address
-    const [name, setName]         = useState();
-    const [number, setNumber]     = useState();
-    const [street, setStreet]     = useState();
-    const [city, setCity]         = useState();
-    const [state, setState]       = useState();
-    const [landmark, setLandmark] = useState();
-    const [zipcode, setZipcode]   = useState();
+    const [name, setName]                         = useState();
+    const [number, setNumber]                     = useState();
+    const [street, setStreet]                     = useState();
+    const [city, setCity]                         = useState();
+    const [state, setState]                       = useState();
+    const [landmark, setLandmark]                 = useState();
+    const [zipcode, setZipcode]                   = useState();
 
     // To Navigate the pages.
     const history = useHistory(); // Get the history object

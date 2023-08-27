@@ -10,6 +10,7 @@ import ProductCard from '../ProductCard/ProductCard.js';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
 const Products = () => {
+
     // AuthContext to store login details as global state.
     const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin, orderPlaced,  setOrderPlaced} = useAuth();
 
@@ -108,14 +109,17 @@ const Products = () => {
             });
     }, []);
 
+    // Select category handle
     const handleSelectCategory = (event, newCategory) => {
         setSelectedCategory(newCategory);
     };
 
+    // Sorting handle
     const handleSortChange = (event) => {
         setSorting(event.target.value);
     };
 
+    // Filter and sort handle
     const filterAndSortProducts = (product) => {
 
         if(searchData == null || product.name.toLowerCase().includes(searchData.toLowerCase()))
@@ -128,6 +132,7 @@ const Products = () => {
         return null;
     };
 
+    // Sorting based on the selection
     const sortProducts = (a, b) => {
         if (sorting === 'Price: HighToLow') {
             return parseFloat(b.price) - parseFloat(a.price);
@@ -139,18 +144,20 @@ const Products = () => {
         return 0; // Default: No sorting
     };
 
+    // Products after sorting
     const filteredAndSortedProducts = (products != null )                                       ?
                                       products.filter(filterAndSortProducts).sort(sortProducts) :
                                       null;
 
-    if(signedIn == true) {  //Change this condition to true @todo
+    // Rendering based on the logged in condition
+    if(signedIn == true) {
         return (
             <Box>
                 <NavBar loggedIn={true} searchEnable={true} isAdmin={isAdmin} searchDataCallBack={setSearchData}/>
                 <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
-                          <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
-                            Order placed successfully!
-                          </MuiAlert>
+                    <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
+                      Order placed successfully!
+                    </MuiAlert>
                 </Snackbar>
                 <Container>
                     <Box sx={{ pb:2 }}>

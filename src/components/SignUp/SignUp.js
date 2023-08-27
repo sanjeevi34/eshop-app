@@ -11,15 +11,20 @@ import styles from './SignUp.css';
 import NavBar from '../NavBar/NavBar.js';
 
 const SignUp = () => {
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [mobile, setMobile] = useState('')
-    const [error, setError] = useState('');
 
+    // Local states
+    const [firstName, setFirstName]             = useState('')
+    const [lastName, setLastName]               = useState('')
+    const [email, setEmail]                     = useState('')
+    const [password, setPassword]               = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [mobile, setMobile]                   = useState('')
+    const [error, setError]                     = useState('');
+
+    // Async function to call the sign up POST API
     async function signUpSubmit(firstName, lastName, email, password, mobile) {
+
+        // Request payload
         const params = {
             email: email,
             role: [
@@ -57,14 +62,14 @@ const SignUp = () => {
     }
 
     const handleSubmit = (event) => {
-          event.preventDefault();
-          if (password !== confirmPassword) {
+        event.preventDefault();
+        if (password !== confirmPassword) {
             setError('Passwords do not match');
             alert('Passwords do not match');
-          } else {
+        } else {
             setError('');
             signUpSubmit(firstName, lastName, email, password, mobile);
-          }
+        }
     }
 
     return (
