@@ -16,6 +16,7 @@ import ProductDetails from './components/ProductDetails/ProductDetails.js'
 import ProductDetailsWithoutStepper from './components/ProductDetailsWithouStepper/ProductDetailsWithoutStepper.js'
 import AddProduct from './components/AddProduct/AddProduct.js'
 import ModifyProduct from './components/ModifyProduct/ModifyProduct.js'
+import Home from "./components/Home/Home.js"
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <AuthProvider>
             <Router>
                 <Switch>
-                    <Route exact path="/" component={NavBar} />
+                    <Route exact path="/" component={Home} />
                     <Route path="/signup" component={SignUp} />
                     <Route path="/login" component={LogIn} />
                     <Route path="/products" component={Products}/>

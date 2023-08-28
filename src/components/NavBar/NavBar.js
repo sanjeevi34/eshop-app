@@ -83,7 +83,7 @@ const NavBar = (props) => {
 
     // Home button click event
     const homeClicked = () => {
-        navigateTo('/products');
+        navigateTo('/');
     };
 
     // Add Product button click event
