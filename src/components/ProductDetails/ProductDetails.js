@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 import NavBar from '../NavBar/NavBar.js';
-import { useAuth } from '../../Contexts/AuthContext';
+import { useAuth } from '../../common/Contexts/AuthContext';
 import { Box, Container, Divider, Paper, Grid, Typography, TextField, Button, NativeSelect, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import {

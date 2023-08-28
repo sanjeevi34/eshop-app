@@ -16,7 +16,7 @@ import {
     Button
 } from "@mui/material";
 
-import { useAuth } from '../../Contexts/AuthContext';
+import { useAuth } from '../../common/Contexts/AuthContext';
 
 // Search component for navbar
 const Search = styled("div")(({ theme }) => ({

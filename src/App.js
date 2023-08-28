@@ -4,8 +4,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import { AuthProvider } from './Contexts/AuthContext'
-import { useAuth } from './Contexts/AuthContext.js'
+import { AuthProvider } from './common/Contexts/AuthContext'
+import { useAuth } from './common/Contexts/AuthContext.js'
 
 //Import all required components
 import Products from './components/Products/Products.js'

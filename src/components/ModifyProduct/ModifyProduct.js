@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { useParams } from 'react-router-dom'; // Import useParams
-import { useAuth } from '../../Contexts/AuthContext';
+import { useAuth } from '../../common/Contexts/AuthContext';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
 const ModifyProduct = () => {

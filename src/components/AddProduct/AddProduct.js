@@ -15,7 +15,7 @@ import {
 import MuiAlert from '@mui/material/Alert';
 import CreatableSelect from 'react-select/creatable';
 import { Link } from "react-router-dom"
-import { useAuth } from '../../Contexts/AuthContext';
+import { useAuth } from '../../common/Contexts/AuthContext';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
 // Importing components

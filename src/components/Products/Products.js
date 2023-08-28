@@ -1,7 +1,7 @@
 import NavBar from '../NavBar/NavBar.js';
 import React, { useState, useEffect } from 'react';
 
-import { useAuth } from '../../Contexts/AuthContext';
+import { useAuth } from '../../common/Contexts/AuthContext';
 
 import { Typography, Container, Grid, Select, MenuItem, Box, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';

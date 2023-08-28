@@ -5,7 +5,7 @@ import { pink } from '@mui/material/colors';
 import MuiAlert from '@mui/material/Alert';
 import LockIcon from "@mui/icons-material/Lock";
 
-import { useAuth } from '../../Contexts/AuthContext';
+import { useAuth } from '../../common/Contexts/AuthContext';
 
 // Importing other components
 import NavBar from '../NavBar/NavBar.js'; //Don't change this position

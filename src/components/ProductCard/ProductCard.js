@@ -20,7 +20,7 @@ import MuiAlert from '@mui/material/Alert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom"
-import { useAuth } from '../../Contexts/AuthContext';
+import { useAuth } from '../../common/Contexts/AuthContext';
 import { useHistory } from 'react-router-dom'; // Import useHistory
 
 // Delete Button With Modal local component used only for Product Card
