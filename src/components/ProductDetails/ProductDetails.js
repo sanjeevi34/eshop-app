@@ -26,12 +26,13 @@ const ProductDetails = () => {
     const { authUser, setAuthUser, signedIn, setSignedIn, isAdmin, setIsAdmin, orderPlaced,  setOrderPlaced} = useAuth();
 
     // Local states
-    const [product, setProduct]                   = useState(null);
-    const [categories, setCategories]             = useState(null);      // Category
-    const [selectedCategory, setSelectedCategory] = useState('All');     // Category selection
-    const [snackbarOpen, setSnackbarOpen]         = useState(false);     // Snack bar for next button
-    const [snackbarOpenAddr, setSnackbarOpenAddr] = useState(false);     // Snack bar for address
-    const [selectedAddress, setSelectedAddress]   = useState('');
+    const [product, setProduct]                         = useState(null);
+    const [categories, setCategories]                   = useState(null);      // Category
+    const [selectedCategory, setSelectedCategory]       = useState('All');     // Category selection
+    const [snackbarOpen, setSnackbarOpen]               = useState(false);     // Snack bar for next button
+    const [snackbarOpenAddr, setSnackbarOpenAddr]       = useState(false);     // Snack bar for address
+    const [snackbarOpenAddAddr, setSnackbarOpenAddAddr] = useState(false);     // Snack bar for wrong address fields
+    const [selectedAddress, setSelectedAddress]         = useState('');
     //Add address
     const [name, setName]                         = useState();
     const [number, setNumber]                     = useState();
@@ -243,6 +244,10 @@ const ProductDetails = () => {
         setSnackbarOpenAddr(false);
     };
 
+    const handleSnackbarAddAddr = () => {
+        setSnackbarOpenAddAddr(false);
+    };
+
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
         //console.log(activeStep);
@@ -302,6 +307,7 @@ const ProductDetails = () => {
                 getAllAddress();
             })
             .catch(error => {
+                setSnackbarOpenAddAddr(true);
                 console.error('Not able to add the address', error);
             });
     }
@@ -353,6 +359,11 @@ const ProductDetails = () => {
                         <Snackbar open={snackbarOpenAddr} autoHideDuration={1500} onClose={handleSnackbarCloseAddr} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
                             <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarCloseAddr} severity="success">
                                 Address added successfully!
+                            </MuiAlert>
+                        </Snackbar>
+                        <Snackbar open={snackbarOpenAddAddr} autoHideDuration={1500} onClose={handleSnackbarAddAddr} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
+                            <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarAddAddr} severity="error">
+                                Give proper address fields!
                             </MuiAlert>
                         </Snackbar>
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
