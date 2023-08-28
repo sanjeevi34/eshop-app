@@ -75,10 +75,16 @@ const ProductDetails = () => {
             })
             .then(data => {
                 //console.log(data);
-                const newObj = data.map((data) => ({
+                const user_id   = window.sessionStorage.getItem('admin-id');
+                const finalObj = data.filter((data) => {
+                    console.log(data);
+                    return data.user == user_id;
+                });
+                const newObj = finalObj.map((data) => ({
                     value: data.id,
                     label: data.name + '--> ' + data.street + ", " + data.city,
                 }));
+
                 setOptions(newObj);
                 //console.log(newObj);
                 setAllAddress(data);
