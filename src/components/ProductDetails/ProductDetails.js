@@ -64,6 +64,7 @@ const ProductDetails = () => {
         const headers = new Headers();
         const accessToken   = window.sessionStorage.getItem('access-token');
         headers.append('Authorization', `Bearer ${accessToken}`);
+        headers.append("x-auth-token", accessToken);
 
         fetch(apiUrl4, { method: 'GET', headers })
             .then(response => {
@@ -157,6 +158,7 @@ const ProductDetails = () => {
         const accessToken   = window.sessionStorage.getItem('access-token');
         const adminId   = window.sessionStorage.getItem('admin-id');
         const headers = {
+                            "x-auth-token": accessToken,
                             'Authorization': `Bearer ${accessToken}`,
                             'Accept': "application/json",
                             'Content-Type': "application/json",
@@ -250,6 +252,7 @@ const ProductDetails = () => {
         const accessToken   = window.sessionStorage.getItem('access-token');
         const adminId   = window.sessionStorage.getItem('admin-id');
         const headers = {
+                            "x-auth-token": accessToken,
                             'Authorization': `Bearer ${accessToken}`,
                             'Accept': "application/json",
                             'Content-Type': "application/json",

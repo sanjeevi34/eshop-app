@@ -78,6 +78,7 @@ const ModifyProduct = () => {
         const headers = {
             "Accept": "*/*",
             "Content-Type": "application/json",
+            "x-auth-token": accessToken,
             'Authorization': `Bearer ${accessToken}`
         }
 

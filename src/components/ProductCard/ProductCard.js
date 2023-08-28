@@ -41,6 +41,7 @@ const DeleteButtonWithModal = (props) => {
         const apiUrl4 = "http://localhost:8080/api/products/" + id;
         const headers = new Headers();
         headers.append('Authorization', `Bearer ${accessToken}`);
+        headers.append("x-auth-token", accessToken);
         fetch(apiUrl4, { method: 'DELETE', headers })
             .then(response => {
                 if (!response.ok) {

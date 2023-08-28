@@ -65,34 +65,46 @@ const LogIn = () => {
 
             const result = await rawResponse.json();
             if(rawResponse.ok) {
-                window.sessionStorage.setItem('access-token', result.token);
+                //console.log(rawResponse.headers.get("x-auth-token"));
+                window.sessionStorage.setItem('access-token', rawResponse.headers.get("x-auth-token"));
+                //window.sessionStorage.setItem('access-token', result.token);
+                console.log(result.token);
+                if(result.roles[0] == "ADMIN") {
+                    setIsAdmin(true);
+                } else {
+                    setIsAdmin(false);
+                }
+                window.sessionStorage.setItem('admin-id', result.id);
 
+                //window.sessionStorage.setItem('access-token', rawResponse.headers.get('X-Auth-Token'));
+                //console.log(rawResponse);
                 /*Check whether it is the admin who logged in*/
-                const accessToken = result.token;
-                const apiUrl4 = "http://localhost:8080/api/users";
-                const headers = new Headers();
-                headers.append('Authorization', `Bearer ${accessToken}`);
-
-                fetch(apiUrl4, { method: 'GET', headers })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                  })
-                    .then(data => {
-                        console.log(data);
-                        const output = (data.filter((value) => {
-                            return value.email === email
-                        }))
-                        window.sessionStorage.setItem('admin-id', output[0].id);
-
-                        setIsAdmin(true);
-                    })
-                      .catch(error => {
-                            //console.error("Not admin");
-                            setIsAdmin(false);
-                      });
+//                const accessToken = result.token;
+//                const apiUrl4 = "http://localhost:8080/api/users";
+//                const headers = new Headers();
+//                headers.append('Authorization', `Bearer ${accessToken}`);
+//
+//                fetch(apiUrl4, { method: 'GET', headers })
+//                    .then(response => {
+//                        if (!response.ok) {
+//                            throw new Error('Network response was not ok');
+//                        }
+//                        return response.json();
+//                  })
+//                    .then(data => {
+//                        console.log(data);
+//                        const output = (data.filter((value) => {
+//                            return value.email === email
+//                        }))
+//                        window.sessionStorage.setItem('admin-id', output[0].id);
+//
+//                        setIsAdmin(true);
+//                    })
+//                      .catch(error => {
+//                            //console.error("Not admin");
+//                            setIsAdmin(false);
+//                            console.log(error); //To remove @todo
+//                      });
                 /*-------------------*/
 
                 setSignedIn(true);
@@ -105,6 +117,7 @@ const LogIn = () => {
         } catch(e) {
             //alert(`Error: ${e.message}`);
             //alert('Email Address or Password is incorrect');
+            console.log(e); //To remove @todo
             setSnackbarOpen(true);
         }
     }

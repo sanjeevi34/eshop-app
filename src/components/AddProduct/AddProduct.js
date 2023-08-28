@@ -72,7 +72,6 @@ const AddProduct = () => {
     async function addProductToBackend(name, category, manufacturer, availableItems, price, imageUrl, description) {
          // params is the request payload for the POST API call
         const params = {
-            id: 12547,
             name: name,
             category: category,
             price: price,
@@ -89,6 +88,7 @@ const AddProduct = () => {
                 headers: {
                 "Accept": "*/*",
                 "Content-Type": "application/json",
+                "x-auth-token": accessToken,
                 'Authorization': `Bearer ${accessToken}`
                 }
             });
