@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {Box,Typography} from "@mui/material";
-import { TextField, Button, Container, Stack, Avatar } from '@mui/material';
+import { TextField, Button, Container, Stack, Avatar, Snackbar } from '@mui/material';
 import { Link } from "react-router-dom"
 import { pink } from '@mui/material/colors';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import LockIcon from "@mui/icons-material/Lock";
+import MuiAlert from '@mui/material/Alert';
 
 import styles from './SignUp.css';
 
@@ -20,6 +21,17 @@ const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [mobile, setMobile]                   = useState('')
     const [error, setError]                     = useState('');
+
+    // Snackbar
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const handleSnackbarClose             = () => {
+                                                setSnackbarOpen(false);
+                                            };
+
+    const [successSnackbarOpen, setSuccessSnackbarOpen] = useState(false);
+    const handleSuccessSnackbarClose                    = () => {
+                                                                setSnackbarOpen(false);
+                                                          };
 
     // Async function to call the sign up POST API
     async function signUpSubmit(firstName, lastName, email, password, mobile) {
@@ -49,7 +61,10 @@ const SignUp = () => {
             const result = await rawResponse.json();
 
             if(rawResponse.ok) {
-                window.location.href = './login';
+                setSuccessSnackbarOpen(true);
+                setTimeout(() => {
+                    window.location.href = './login';
+                },2000);
                 //alert('Form Submitted');
             } else {
                 const error = new Error();
@@ -75,6 +90,16 @@ const SignUp = () => {
     return (
         <React.Fragment>
             <NavBar loggedIn={false}/>
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="error">
+                    SignUp Failed! Please enter proper details!
+                </MuiAlert>
+            </Snackbar>
+            <Snackbar open={successSnackbarOpen} autoHideDuration={3000} onClose={handleSuccessSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'right'}} style={{ marginTop: '70px' }}>
+                <MuiAlert elevation={6} variant="filled" onClose={handleSuccessSnackbarClose} severity="success">
+                    SignUp Successful!
+                </MuiAlert>
+            </Snackbar>
             <div
                 style={{
                     display: 'flex',
