@@ -39,7 +39,7 @@ const ProductDetails = () => {
     const [street, setStreet]                     = useState();
     const [city, setCity]                         = useState();
     const [state, setState]                       = useState();
-    const [landmark, setLandmark]                 = useState();
+    const [landmark, setLandmark]                 = useState("");
     const [zipcode, setZipcode]                   = useState();
     // Address Option selected
     const [option, setOptions]                    = useState([{ value: 0, label: '' }]);
