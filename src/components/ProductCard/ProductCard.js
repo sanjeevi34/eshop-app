@@ -144,7 +144,7 @@ const ProductCard = ({ product, setRefetchData }) => {
                     </Typography>
                 </Box>
                 <Typography variant="body2" color="textSecondary" sx={{ pt:1 }} align="left"
-                            container direction="column" className="card-content-wrapper">
+                            container direction="column" className="card-description">
                     {product.description}
                 </Typography>
             </CardContent>

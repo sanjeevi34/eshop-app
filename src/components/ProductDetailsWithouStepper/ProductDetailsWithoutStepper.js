@@ -161,8 +161,8 @@ const ProductDetailsWithoutStepper = () => {
                                             </Grid>
                                         </Box>
                                         <Typography variant="subtitle1" sx={{ pt: 2}}>Category: <b>{product.category}</b></Typography>
-                                        <Typography variant="body1" sx={{ pt: 2}}>{product.description}</Typography>
-                                        <Typography variant="h6" color="error" sx={{ pt: 2}}>Price: {'₹' + product.price}</Typography>
+                                        <Typography variant="body2" component="p" sx={{ fontStyle: "italic", pt: 2}}>{product.description}</Typography>
+                                        <Typography variant="h5" color="error" sx={{ pt: 2, color: "red"}}>{'₹ ' + product.price}</Typography>
                                         <form autoComplete="off" onSubmit={handleSubmit}>
                                             <TextField
                                                 label="Enter Quantity"

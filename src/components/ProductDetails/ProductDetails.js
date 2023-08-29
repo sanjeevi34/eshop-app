@@ -366,25 +366,25 @@ const ProductDetails = () => {
                                 Give proper address fields!
                             </MuiAlert>
                         </Snackbar>
-                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                        <InputLabel variant="standard" htmlFor="uncontrolled-native" sx={{alignItems: 'center', align:'center'}} align="left">
                             Select Address
                         </InputLabel>
-                        <NativeSelect sx={{ width: '150%' }}
-                            onChange={handleOptionChange}
-                            defaultValue={0}
-                            inputProps={{
-                              name: 'age',
-                              id: 'uncontrolled-native',
-                            }}
-                            value={selectedAddress}
-                        >
-                            <option key={0} value=""></option>
-                            {option.map((option, index) => (
-                                <option key={index} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </NativeSelect>
+                            <NativeSelect sx={{ width: '150%' }}
+                                onChange={handleOptionChange}
+                                defaultValue={0}
+                                inputProps={{
+                                  name: 'age',
+                                  id: 'uncontrolled-native',
+                                }}
+                                value={selectedAddress}
+                            >
+                                <option key={0} value=""></option>
+                                {option.map((option, index) => (
+                                    <option key={index} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </NativeSelect>
                         <div
                             style={{
                                 display: 'flex',
@@ -481,7 +481,7 @@ const ProductDetails = () => {
                 return (
                     /* Content for the "Confirm Order" step */
                     <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                        <Paper elevation={3} style={{ display: 'flex', padding: '8%', paddingBottom: '12%' }} sx={{ width: '98%' }}>
+                        <Paper elevation={3} style={{ display: 'flex', padding: '8%', paddingBottom: '12%' }} sx={{ width: '140%' }}>
                             <Grid container spacing={3} justifyContent="space-between">
                                 {/* Left Side (Product Details) */}
                                 <Grid item xs={7} align="left" container direction="column">
@@ -489,7 +489,7 @@ const ProductDetails = () => {
                                     <Typography variant="subtitle1" sx={{mb: 1}}>Quantity: <b>{quantity}</b></Typography>
                                     <Typography variant="subtitle1" sx={{mb: 1}}>Category: {product.category}</Typography>
                                     <Typography variant="body1" sx={{mb: 1}}><i>{product.description}</i></Typography>
-                                    <Typography color="error" variant="h6">Total Price: {'₹ ' + product.price * quantity}</Typography>
+                                    <Typography color="error" variant="h5" sx={{color:"red", pt:2}}>Total Price: {'₹ ' + product.price * quantity}</Typography>
                                 </Grid>
 
                                 {/* Vertical Line */}
@@ -527,7 +527,7 @@ const ProductDetails = () => {
                     <NavBar loggedIn={true} isAdmin={isAdmin}/>
                     <Box sx={{marginBottom:5}}></Box>
                 <Container maxWidth="md" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Paper sx={{ width: '100%' }}>
+                    <Paper sx={{ width: '120%', p:2}}>
                         <Box p={1}>
                             <Stepper activeStep={activeStep}>
                                 {steps.map((label, index) => (
