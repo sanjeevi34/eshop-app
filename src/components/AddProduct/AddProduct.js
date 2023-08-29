@@ -216,7 +216,6 @@ const AddProduct = () => {
                         label="Image URL"
                         onChange={e => setImageUrl(e.target.value)}
                         value={imageUrl}
-                        required
                         fullWidth
                         sx={{mb: 2}}
                     />

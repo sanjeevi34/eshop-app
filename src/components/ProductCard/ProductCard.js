@@ -22,6 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from "react-router-dom"
 import { useAuth } from '../../common/Contexts/AuthContext';
 import { useHistory } from 'react-router-dom'; // Import useHistory
+import "./ProductCard.css"
 
 // Delete Button With Modal local component used only for Product Card
 const DeleteButtonWithModal = (props) => {
@@ -142,7 +143,8 @@ const ProductCard = ({ product, setRefetchData }) => {
                         {'₹' + product.price}
                     </Typography>
                 </Box>
-                <Typography variant="body2" color="textSecondary" sx={{ pt:1 }} align="left" container direction="column">
+                <Typography variant="body2" color="textSecondary" sx={{ pt:1 }} align="left"
+                            container direction="column" className="card-content-wrapper">
                     {product.description}
                 </Typography>
             </CardContent>

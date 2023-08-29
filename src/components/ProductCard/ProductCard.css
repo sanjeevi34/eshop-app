@@ -1,0 +1,7 @@
+.card-content-wrapper {
+    height: 80px;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
